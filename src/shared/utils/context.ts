@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import jwt from 'jsonwebtoken';
 
 export default class Context {
   private ctx: any;
@@ -24,13 +24,10 @@ export default class Context {
   }
 
   public isAdmin(): boolean {
-    const { secret } = strapi.config.get("admin.auth", {}) as any;
+    const { secret } = strapi.config.get('admin.auth', {}) as any;
     try {
-      const result = jwt.verify(
-        this.ctx.request.header.authorization.split(" ")[1],
-        secret
-      );
-      console.log("result", result);
+      const result = jwt.verify(this.ctx.request.header.authorization.split(' ')[1], secret);
+      console.log('result', result);
       return true;
     } catch (error) {
       return false;

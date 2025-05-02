@@ -17,6 +17,7 @@
   "dependencies": {
     "@strapi/plugin-cloud": "5.12.6",
     "@strapi/plugin-users-permissions": "5.12.6",
+    "@strapi/provider-email-nodemailer": "^5.12.7",
     "@strapi/strapi": "5.12.6",
     "pg": "8.8.0",
     "react": "^18.0.0",
@@ -29,6 +30,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "prettier": "^3.5.3",
     "typescript": "^5"
   },
   "engines": {

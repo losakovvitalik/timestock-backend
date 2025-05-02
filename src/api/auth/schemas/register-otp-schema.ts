@@ -1,5 +1,7 @@
 import { z } from "zod";
 
-export const registerOTPSchema = z.object({
-  email: z.string().email().nonempty(),
+export const sendOTPSchema = z.object({
+  email: z.string().nonempty().email(),
 });
+
+export type SendOTPSchemaType = z.infer<typeof sendOTPSchema>;

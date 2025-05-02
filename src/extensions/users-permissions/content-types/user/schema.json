@@ -9,7 +9,7 @@
     "displayName": "User"
   },
   "options": {
-    "timestamps": true
+    "draftAndPublish": false
   },
   "attributes": {
     "username": {
@@ -76,6 +76,9 @@
       "relation": "oneToMany",
       "target": "api::project.project",
       "mappedBy": "members"
+    },
+    "otp_code": {
+      "type": "string"
     }
   }
 }
