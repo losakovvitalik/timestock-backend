@@ -391,6 +391,7 @@ export interface ApiTimeEntryTimeEntry extends Struct.CollectionTypeSchema {
     start_time: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> & Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<'oneToOne', 'plugin::users-permissions.user'>;
   };
 }
 

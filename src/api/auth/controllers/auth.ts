@@ -27,8 +27,9 @@ export default factories.createCoreController('plugin::users-permissions.user', 
 
     let otpCode: string;
     try {
-      otpCode = await OTPService.sendEmail(user.email);
+      otpCode = await OTPService.sendEmail(body.email);
     } catch (error) {
+      strapi.log.error(error);
       return sendError({
         code: 'FAILED_SEND_EMAIL',
         message: 'Failed to send the email',
@@ -112,6 +113,7 @@ export default factories.createCoreController('plugin::users-permissions.user', 
     return {
       jwt,
       user: {
+        id: user.id,
         email: user.email,
       },
     };
