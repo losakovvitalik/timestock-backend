@@ -11,7 +11,7 @@
     "draftAndPublish": false
   },
   "attributes": {
-    "name": {
+    "description": {
       "type": "string"
     },
     "project": {

@@ -69,16 +69,19 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::project.project",
+      "private": true,
       "mappedBy": "owner"
     },
     "projects": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::project.project",
+      "private": true,
       "mappedBy": "members"
     },
     "otp_code": {
-      "type": "string"
+      "type": "string",
+      "private": true
     }
   }
 }
