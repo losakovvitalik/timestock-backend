@@ -38,8 +38,9 @@
       "inversedBy": "projects"
     },
     "color": {
-      "type": "string",
-      "required": true
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::color.color"
     }
   }
 }
