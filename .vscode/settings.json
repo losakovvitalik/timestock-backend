@@ -2,6 +2,10 @@
   "conventionalCommits.scopes": [
     "auth",
     "color",
-    "push-subscription"
+    "push-subscription",
+    "reminder"
+  ],
+  "cSpell.words": [
+    "webpush"
   ]
 }

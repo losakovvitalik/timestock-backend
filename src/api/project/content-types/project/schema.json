@@ -41,6 +41,12 @@
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::color.color"
+    },
+    "reminders": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::reminder.reminder",
+      "mappedBy": "project"
     }
   }
 }

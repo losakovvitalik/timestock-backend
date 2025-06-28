@@ -1,4 +1,4 @@
-import { EmailService } from '../../../shared/services/email-service';
+import { EmailService } from '../../../shared/services/email.service';
 import { generateOTP } from '../utils/generate-otp';
 
 export class OTPService {

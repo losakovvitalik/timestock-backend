@@ -386,6 +386,7 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
     name: Schema.Attribute.String & Schema.Attribute.Required;
     owner: Schema.Attribute.Relation<'manyToOne', 'plugin::users-permissions.user'>;
     publishedAt: Schema.Attribute.DateTime;
+    reminders: Schema.Attribute.Relation<'oneToMany', 'api::reminder.reminder'>;
     time_entries: Schema.Attribute.Relation<'oneToMany', 'api::time-entry.time-entry'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> & Schema.Attribute.Private;
@@ -417,6 +418,29 @@ export interface ApiPushSubscriptionPushSubscription extends Struct.CollectionTy
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> & Schema.Attribute.Private;
     user: Schema.Attribute.Relation<'oneToOne', 'plugin::users-permissions.user'>;
+  };
+}
+
+export interface ApiReminderReminder extends Struct.CollectionTypeSchema {
+  collectionName: 'reminders';
+  info: {
+    displayName: 'Reminder';
+    pluralName: 'reminders';
+    singularName: 'reminder';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> & Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::reminder.reminder'> &
+      Schema.Attribute.Private;
+    project: Schema.Attribute.Relation<'manyToOne', 'api::project.project'>;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> & Schema.Attribute.Private;
   };
 }
 
@@ -882,6 +906,7 @@ declare module '@strapi/strapi' {
       'api::color.color': ApiColorColor;
       'api::project.project': ApiProjectProject;
       'api::push-subscription.push-subscription': ApiPushSubscriptionPushSubscription;
+      'api::reminder.reminder': ApiReminderReminder;
       'api::time-entry.time-entry': ApiTimeEntryTimeEntry;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
