@@ -1,6 +1,6 @@
 // import type { Core } from '@strapi/strapi';
 
-import webpush, { PushSubscription, WebPushError } from 'web-push';
+import webpush from 'web-push';
 import { PushService } from './shared/services/push.service';
 
 webpush.setVapidDetails(

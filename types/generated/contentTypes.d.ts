@@ -33,6 +33,10 @@ export interface AdminApiToken extends Struct.CollectionTypeSchema {
         minLength: 1;
       }> &
       Schema.Attribute.DefaultTo<''>;
+    encryptedKey: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 1;
+      }>;
     expiresAt: Schema.Attribute.DateTime;
     lastUsedAt: Schema.Attribute.DateTime;
     lifespan: Schema.Attribute.BigInteger;
@@ -360,6 +364,37 @@ export interface ApiColorColor extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiProjectReminderProjectReminder extends Struct.CollectionTypeSchema {
+  collectionName: 'project_reminders';
+  info: {
+    displayName: 'project reminder';
+    pluralName: 'project-reminders';
+    singularName: 'project-reminder';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> & Schema.Attribute.Private;
+    enabled: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::project-reminder.project-reminder'
+    > &
+      Schema.Attribute.Private;
+    next_at: Schema.Attribute.DateTime;
+    project: Schema.Attribute.Relation<'manyToOne', 'api::project.project'>;
+    publishedAt: Schema.Attribute.DateTime;
+    recurrence_options: Schema.Attribute.JSON;
+    text: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> & Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<'oneToOne', 'plugin::users-permissions.user'>;
+  };
+}
+
 export interface ApiProjectProject extends Struct.CollectionTypeSchema {
   collectionName: 'projects';
   info: {
@@ -385,8 +420,11 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
     members: Schema.Attribute.Relation<'manyToOne', 'plugin::users-permissions.user'>;
     name: Schema.Attribute.String & Schema.Attribute.Required;
     owner: Schema.Attribute.Relation<'manyToOne', 'plugin::users-permissions.user'>;
+    project_reminders: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::project-reminder.project-reminder'
+    >;
     publishedAt: Schema.Attribute.DateTime;
-    reminders: Schema.Attribute.Relation<'oneToMany', 'api::reminder.reminder'>;
     time_entries: Schema.Attribute.Relation<'oneToMany', 'api::time-entry.time-entry'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> & Schema.Attribute.Private;
@@ -418,29 +456,6 @@ export interface ApiPushSubscriptionPushSubscription extends Struct.CollectionTy
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> & Schema.Attribute.Private;
     user: Schema.Attribute.Relation<'oneToOne', 'plugin::users-permissions.user'>;
-  };
-}
-
-export interface ApiReminderReminder extends Struct.CollectionTypeSchema {
-  collectionName: 'reminders';
-  info: {
-    displayName: 'Reminder';
-    pluralName: 'reminders';
-    singularName: 'reminder';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> & Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<'oneToMany', 'api::reminder.reminder'> &
-      Schema.Attribute.Private;
-    project: Schema.Attribute.Relation<'manyToOne', 'api::project.project'>;
-    publishedAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> & Schema.Attribute.Private;
   };
 }
 
@@ -904,9 +919,9 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::color.color': ApiColorColor;
+      'api::project-reminder.project-reminder': ApiProjectReminderProjectReminder;
       'api::project.project': ApiProjectProject;
       'api::push-subscription.push-subscription': ApiPushSubscriptionPushSubscription;
-      'api::reminder.reminder': ApiReminderReminder;
       'api::time-entry.time-entry': ApiTimeEntryTimeEntry;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

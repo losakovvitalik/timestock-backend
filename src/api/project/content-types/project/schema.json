@@ -10,6 +10,7 @@
   "options": {
     "draftAndPublish": false
   },
+  "pluginOptions": {},
   "attributes": {
     "name": {
       "type": "string",
@@ -42,10 +43,10 @@
       "relation": "manyToOne",
       "target": "api::color.color"
     },
-    "reminders": {
+    "project_reminders": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::reminder.reminder",
+      "target": "api::project-reminder.project-reminder",
       "mappedBy": "project"
     }
   }

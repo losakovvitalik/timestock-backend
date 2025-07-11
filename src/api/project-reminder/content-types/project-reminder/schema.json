@@ -1,0 +1,49 @@
+{
+  "kind": "collectionType",
+  "collectionName": "project_reminders",
+  "info": {
+    "singularName": "project-reminder",
+    "pluralName": "project-reminders",
+    "displayName": "project reminder"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "project": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::project.project",
+      "inversedBy": "project_reminders"
+    },
+    "text": {
+      "type": "string"
+    },
+    "recurrence_options": {
+      "type": "json",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "enabled"
+            },
+            true
+          ]
+        }
+      }
+    },
+    "next_at": {
+      "type": "datetime"
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    }
+  }
+}

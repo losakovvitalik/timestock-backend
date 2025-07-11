@@ -15,24 +15,25 @@
     "upgrade:dry": "npx @strapi/upgrade latest --dry"
   },
   "dependencies": {
-    "@strapi/plugin-cloud": "5.12.6",
-    "@strapi/plugin-users-permissions": "5.12.6",
-    "@strapi/provider-email-nodemailer": "^5.15.0",
-    "@strapi/strapi": "5.12.6",
+    "@strapi/plugin-cloud": "^5.17.0",
+    "@strapi/plugin-users-permissions": "^5.17.0",
+    "@strapi/provider-email-nodemailer": "^5.17.0",
+    "@strapi/strapi": "^5.17.0",
+    "date-fns": "^4.1.0",
     "pg": "8.8.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.30.1",
-    "styled-components": "^6.1.18",
+    "styled-components": "^6.1.19",
     "web-push": "^3.6.7",
-    "zod": "^3.25.56"
+    "zod": "^3.25.74"
   },
   "devDependencies": {
-    "@types/node": "^20.19.0",
+    "@types/node": "^20.19.4",
     "@types/react": "^18.3.23",
     "@types/react-dom": "^18.3.7",
     "@types/web-push": "^3.6.4",
-    "prettier": "^3.5.3",
+    "prettier": "^3.6.2",
     "typescript": "^5.8.3"
   },
   "engines": {
