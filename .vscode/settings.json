@@ -3,7 +3,8 @@
     "auth",
     "color",
     "push-subscription",
-    "project-reminder"
+    "project-reminder",
+    "deps"
   ],
   "cSpell.words": [
     "webpush"
