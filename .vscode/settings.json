@@ -4,7 +4,8 @@
     "color",
     "push-subscription",
     "project-reminder",
-    "deps"
+    "deps",
+    "time-entry"
   ],
   "cSpell.words": [
     "webpush"
