@@ -48,6 +48,9 @@
       "relation": "oneToMany",
       "target": "api::project-reminder.project-reminder",
       "mappedBy": "project"
+    },
+    "time_spent": {
+      "type": "integer"
     }
   }
 }

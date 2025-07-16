@@ -1,7 +1,6 @@
 // import type { Core } from '@strapi/strapi';
 
 import webpush from 'web-push';
-import { PushService } from './shared/services/push.service';
 
 webpush.setVapidDetails(
   'mailto:losakovvitalik@gmail.com',
@@ -26,11 +25,34 @@ export default {
    * run jobs, or perform some special logic.
    */
   async bootstrap(/* { strapi }: { strapi: Core.Strapi } */) {
-    const push = await strapi.documents('api::push-subscription.push-subscription').findMany();
+    const projects = await strapi.documents('api::project.project').findMany();
 
-    await PushService.sendToUser('tr9tx5r6so21m9ecu262dq81', {
-      text: 'Текст',
-      title: 'Заголовок',
-    });
+    for (const project of projects) {
+      const entries = await strapi.documents('api::time-entry.time-entry').findMany({
+        filters: {
+          project: {
+            documentId: project.documentId,
+          },
+          end_time: {
+            $notNull: true,
+          },
+        },
+      });
+
+      const spentTime = entries.reduce((prev, entry) => {
+        const durationSeconds = Math.floor(
+          (new Date(entry.end_time).getTime() - new Date(entry.start_time).getTime()) / 1000
+        );
+
+        return prev + durationSeconds;
+      }, 0);
+
+      await strapi.documents('api::project.project').update({
+        documentId: project.documentId,
+        data: {
+          time_spent: spentTime,
+        },
+      });
+    }
   },
 };

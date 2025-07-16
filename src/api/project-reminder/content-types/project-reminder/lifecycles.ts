@@ -7,7 +7,6 @@ export default {
     const context = strapi.requestContext.get();
     const ctx = new Context(context);
 
-    // При создании напоминания сразу вычисляем время следующего напоминания
     const documentId = event.result.documentId;
     const nextAt = await ProjectReminderService.calcNextTime(documentId);
     await strapi.documents('api::project-reminder.project-reminder').update({

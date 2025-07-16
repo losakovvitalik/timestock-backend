@@ -426,6 +426,7 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
     >;
     publishedAt: Schema.Attribute.DateTime;
     time_entries: Schema.Attribute.Relation<'oneToMany', 'api::time-entry.time-entry'>;
+    time_spent: Schema.Attribute.Integer;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> & Schema.Attribute.Private;
   };

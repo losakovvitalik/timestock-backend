@@ -4,3 +4,10 @@ export interface AfterCreateEvent<Entity extends Record<string, any> = Record<st
     documentId: string;
   } & Entity;
 }
+
+export interface AfterUpdateEvent<Entity extends Record<string, any> = Record<string, any>> {
+  result: {
+    id: number;
+    documentId: string;
+  } & Entity;
+}
