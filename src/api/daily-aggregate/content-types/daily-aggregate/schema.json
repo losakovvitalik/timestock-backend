@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "daily_aggregates",
+  "info": {
+    "singularName": "daily-aggregate",
+    "pluralName": "daily-aggregates",
+    "displayName": "Daily aggregate"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "project": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::project.project"
+    },
+    "date": {
+      "type": "date"
+    },
+    "time_spent_seconds": {
+      "type": "integer"
+    }
+  }
+}

@@ -5,9 +5,11 @@
     "push-subscription",
     "project-reminder",
     "deps",
-    "time-entry"
+    "time-entry",
+    "user"
   ],
   "cSpell.words": [
+    "luxon",
     "webpush"
   ]
 }

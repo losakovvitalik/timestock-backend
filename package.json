@@ -21,6 +21,7 @@
     "@strapi/strapi": "^5.17.0",
     "date-fns": "^4.1.0",
     "jsonwebtoken": "^9.0.2",
+    "luxon": "^3.7.1",
     "pg": "8.8.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -32,6 +33,7 @@
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.10",
+    "@types/luxon": "^3.6.2",
     "@types/node": "^20.19.4",
     "@types/react": "^18.3.23",
     "@types/react-dom": "^18.3.7",
