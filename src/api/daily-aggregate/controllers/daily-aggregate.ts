@@ -6,7 +6,7 @@ import { factories } from '@strapi/strapi';
 import Context from '../../../shared/utils/context';
 import { validatePayload } from '../../../shared/lib/validate-payload';
 import { dailyAggregateGetByProjectQuerySchema } from '../schemas/daily-aggregate-get-by-project-schemas';
-import { getDatesBetween } from '../../../shared/utils/time';
+import { getDatesInterval } from '../../../shared/utils/time';
 import { DailyAggregateService } from '../services/daily-aggregate.service';
 
 export default factories.createCoreController(
@@ -18,7 +18,7 @@ export default factories.createCoreController(
 
       const params = validatePayload(dailyAggregateGetByProjectQuerySchema, rawParams);
 
-      const dates = getDatesBetween(params.from, params.to);
+      const dates = getDatesInterval(params.from, params.to);
 
       const results = [];
 

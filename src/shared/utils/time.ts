@@ -25,7 +25,7 @@ export function calculateOverlap(
   return Math.max(0, duration);
 }
 
-export function getDatesBetween(startISO: string, endISO: string): string[] {
+export function getDatesInterval(startISO: string, endISO: string): string[] {
   const start = DateTime.fromISO(startISO);
   const end = DateTime.fromISO(endISO);
 

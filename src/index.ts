@@ -1,7 +1,7 @@
 // import type { Core } from '@strapi/strapi';
 
 import webpush from 'web-push';
-import { calculateOverlap, getDatesBetween, getDayRange } from './shared/utils/time';
+import { calculateOverlap, getDatesInterval, getDayRange } from './shared/utils/time';
 
 webpush.setVapidDetails(
   'mailto:losakovvitalik@gmail.com',
@@ -28,7 +28,7 @@ export default {
   async bootstrap(/* { strapi }: { strapi: Core.Strapi } */) {
 
 
-    console.log(getDatesBetween('2025-07-05', '2025-07-11'))
+    console.log(getDatesInterval('2025-07-05', '2025-07-11'))
 
 
 
