@@ -378,12 +378,12 @@ export interface ApiDailyAggregateDailyAggregate extends Struct.CollectionTypeSc
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> & Schema.Attribute.Private;
     date: Schema.Attribute.Date;
+    duration: Schema.Attribute.Integer;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::daily-aggregate.daily-aggregate'> &
       Schema.Attribute.Private;
     project: Schema.Attribute.Relation<'oneToOne', 'api::project.project'>;
     publishedAt: Schema.Attribute.DateTime;
-    time_spent_seconds: Schema.Attribute.Integer;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> & Schema.Attribute.Private;
     user: Schema.Attribute.Relation<'oneToOne', 'plugin::users-permissions.user'>;
@@ -443,7 +443,7 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::project.project'> &
       Schema.Attribute.Private;
-    members: Schema.Attribute.Relation<'manyToOne', 'plugin::users-permissions.user'>;
+    members: Schema.Attribute.Relation<'manyToMany', 'plugin::users-permissions.user'>;
     name: Schema.Attribute.String & Schema.Attribute.Required;
     owner: Schema.Attribute.Relation<'manyToOne', 'plugin::users-permissions.user'>;
     project_reminders: Schema.Attribute.Relation<
@@ -918,8 +918,7 @@ export interface PluginUsersPermissionsUser extends Struct.CollectionTypeSchema 
       Schema.Attribute.SetMinMaxLength<{
         minLength: 6;
       }>;
-    projects: Schema.Attribute.Relation<'oneToMany', 'api::project.project'> &
-      Schema.Attribute.Private;
+    projects: Schema.Attribute.Relation<'manyToMany', 'api::project.project'>;
     provider: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     resetPasswordToken: Schema.Attribute.String & Schema.Attribute.Private;

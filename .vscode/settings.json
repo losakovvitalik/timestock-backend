@@ -6,7 +6,8 @@
     "project-reminder",
     "deps",
     "time-entry",
-    "user"
+    "user",
+    "daily-aggregate"
   ],
   "cSpell.words": [
     "luxon",

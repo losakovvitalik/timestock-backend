@@ -75,9 +75,8 @@
     },
     "projects": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "manyToMany",
       "target": "api::project.project",
-      "private": true,
       "mappedBy": "members"
     },
     "otp_code": {

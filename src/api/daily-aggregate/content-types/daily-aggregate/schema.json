@@ -24,7 +24,7 @@
     "date": {
       "type": "date"
     },
-    "time_spent_seconds": {
+    "duration": {
       "type": "integer"
     }
   }

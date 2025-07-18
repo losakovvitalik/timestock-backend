@@ -12,7 +12,7 @@ export class ProjectReminderService {
     });
 
     await PushService.sendToUser(reminder.user.documentId, {
-      title: `${reminder.project.name} | TimeStock`,
+      title: `Проект "${reminder.project.name}"`,
       text: reminder.text,
     });
 

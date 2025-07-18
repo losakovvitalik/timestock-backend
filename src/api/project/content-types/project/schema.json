@@ -34,7 +34,7 @@
     },
     "members": {
       "type": "relation",
-      "relation": "manyToOne",
+      "relation": "manyToMany",
       "target": "plugin::users-permissions.user",
       "inversedBy": "projects"
     },

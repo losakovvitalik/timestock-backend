@@ -5,7 +5,7 @@ import {
   sendNotFoundError,
   sendResponse,
   sendValidationError,
-} from '../../../shared/utils/response';
+} from '../../../shared/lib/response';
 import { sendOTPSchema } from '../schemas/register-otp-schema';
 import { OTPService } from '../services/otp-service';
 import { UserService } from '../services/user-service';
