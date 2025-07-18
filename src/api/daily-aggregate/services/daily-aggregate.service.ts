@@ -49,8 +49,6 @@ export class DailyAggregateService {
       },
     });
 
-    console.log(userId);
-
     const user = project.members[0];
 
     if (!user) {
@@ -61,6 +59,9 @@ export class DailyAggregateService {
 
     const timeEntries = await strapi.documents('api::time-entry.time-entry').findMany({
       filters: {
+        project: {
+          documentId: project.documentId,
+        },
         start_time: {
           $lte: dayRange.to.toJSDate(),
         },
