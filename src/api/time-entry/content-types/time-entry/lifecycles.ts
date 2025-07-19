@@ -1,13 +1,40 @@
 import { Data } from '@strapi/strapi';
-import { AfterUpdateEvent } from '../../../../../types/strapi/lifecycles';
+import { AfterUpdateEvent, BeforeUpdateEvent } from '../../../../../types/strapi/lifecycles';
 import { getDatesInterval } from '../../../../shared/utils/time';
 import { DailyAggregateService } from '../../../daily-aggregate/services/daily-aggregate.service';
 
 export default {
-  async beforeUpdate(event) {
-    console.log(event);
+  async beforeUpdate(
+    event: BeforeUpdateEvent<{
+      end_time?: string;
+      start_time?: string;
+      duration?: number;
+      project: { set: { id: number }[] };
+    }>
+  ) {
+    if (event?.params?.data?.end_time) {
+      const timeEntry = await strapi.documents('api::time-entry.time-entry').findFirst({
+        filters: {
+          id: event.params.where.id,
+        },
+        populate: {
+          project: true,
+        },
+      });
+
+      event.params.data.duration = Math.floor(
+        (new Date(event.params.data.end_time).getTime() -
+          new Date(timeEntry.start_time).getTime()) /
+          1000
+      );
+    }
   },
   async afterUpdate(event: AfterUpdateEvent<Data.ContentType<'api::time-entry.time-entry'>>) {
+    /**
+     * если после обновление у трека времени, до сих пор нет конечного времени
+     * (прим. изменили проект), то пересчитывать ещё пока ничего не нужно
+     * TODO: сделать чтоб время пересчитывалось даже когда трек активен
+     */
     if (!event.result.end_time) return;
 
     const timeEntry = await strapi.documents('api::time-entry.time-entry').findOne({
@@ -18,11 +45,12 @@ export default {
       },
     });
 
+    // если трек не привязан к проекту, то не надо и пересчитывать
+    if (!timeEntry.project) return;
+
     const dates = new Set(
       getDatesInterval(String(timeEntry.start_time), String(timeEntry.end_time))
     );
-
-    console.log(dates);
 
     for (const date of dates) {
       await DailyAggregateService.recalculateForProject({
@@ -31,18 +59,5 @@ export default {
         userId: timeEntry.user.id,
       });
     }
-
-    // При завершении трека добавляем потраченное время в общее время проекта
-    await strapi.documents('api::project.project').update({
-      documentId: timeEntry.project.documentId,
-      data: {
-        time_spent:
-          timeEntry.project.time_spent +
-          Math.floor(
-            (new Date(timeEntry.end_time).getTime() - new Date(timeEntry.start_time).getTime()) /
-              1000
-          ),
-      },
-    });
   },
 };

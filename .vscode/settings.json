@@ -7,7 +7,8 @@
     "deps",
     "time-entry",
     "user",
-    "daily-aggregate"
+    "daily-aggregate",
+    "project"
   ],
   "cSpell.words": [
     "luxon",
