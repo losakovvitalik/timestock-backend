@@ -41,42 +41,32 @@ export default factories.createCoreController('api::time-entry.time-entry', {
       typeof data.project === 'string' ? data.project : (data.project?.documentId ?? null);
 
     if (oldEntity) {
-      /**
-       * если привязали к новому проекту
-       * то пересчитываем общее потраченное время для обоих проектов
-       */
       if (oldEntity.project && data.project) {
+        /**
+         * если привязали к новому проекту
+         * то пересчитываем общее потраченное время для обоих проектов
+         */
         await ProjectService.recalculateTotalDuration(newProjectId);
         await ProjectService.recalculateTotalDuration(oldProjectId);
-        return;
-      }
-
-      /**
-       * если привязали к проекту и
-       * до этого проект не был указан
-       */
-      if (oldEntity.project === null && data.project) {
+      } else if (oldEntity.project === null && data.project) {
+        /**
+         * если привязали к проекту и
+         * до этого проект не был указан
+         */
         await ProjectService.recalculateTotalDuration(newProjectId);
-        return;
-      }
-
-      /**
-       * если отвязали сущность от проекта,
-       * то пересчитываем время для проекта,
-       * который был привязан до изменений
-       */
-      if (data.project === null) {
+      } else if (data.project === null) {
+        /**
+         * если отвязали сущность от проекта,
+         * то пересчитываем время для проекта,
+         * который был привязан до изменений
+         */
         await ProjectService.recalculateTotalDuration(oldProjectId);
-        return;
-      }
-
-      /**
-       * если изменил только время начала
-       * или время конца трека времени
-       */
-      if (data.start_time || data.end_time) {
+      } else if (data.start_time || data.end_time) {
+        /**
+         * если изменил только время начала
+         * или время конца трека времени
+         */
         await ProjectService.recalculateTotalDuration(oldProjectId);
-        return;
       }
     }
 
