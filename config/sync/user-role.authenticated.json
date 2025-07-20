@@ -6,6 +6,11 @@
   "locale": null,
   "permissions": [
     {
+      "documentId": "o5yg9knmgobxjc50q3prroi3",
+      "action": "api::app-feedback.app-feedback.create",
+      "locale": null
+    },
+    {
       "documentId": "i01o82i7jycr0gtkvtd8m74f",
       "action": "api::color.color.find",
       "locale": null
@@ -13,6 +18,11 @@
     {
       "documentId": "m65ltkod146en9og9a9lpyyp",
       "action": "api::color.color.findOne",
+      "locale": null
+    },
+    {
+      "documentId": "t58xapdeisyscmzqq4l0ka18",
+      "action": "api::daily-aggregate.daily-aggregate.getByProject",
       "locale": null
     },
     {
@@ -108,6 +118,11 @@
     {
       "documentId": "l7as15t41zrbyknt74r9cwoa",
       "action": "plugin::users-permissions.user.me",
+      "locale": null
+    },
+    {
+      "documentId": "cbm6bbewg5atdrlcs2wnbrnf",
+      "action": "plugin::users-permissions.user.update",
       "locale": null
     }
   ]

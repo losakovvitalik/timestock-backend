@@ -8,7 +8,8 @@
     "time-entry",
     "user",
     "daily-aggregate",
-    "project"
+    "project",
+    "app-feedback"
   ],
   "cSpell.words": [
     "luxon",

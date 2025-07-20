@@ -7,8 +7,8 @@
       "searchable": true,
       "pageSize": 10,
       "mainField": "description",
-      "defaultSortBy": "description",
-      "defaultSortOrder": "ASC"
+      "defaultSortBy": "id",
+      "defaultSortOrder": "DESC"
     },
     "metadatas": {
       "id": {
@@ -91,6 +91,20 @@
           "sortable": true
         }
       },
+      "duration": {
+        "edit": {
+          "label": "duration",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "duration",
+          "searchable": true,
+          "sortable": true
+        }
+      },
       "createdAt": {
         "edit": {
           "label": "createdAt",
@@ -159,12 +173,6 @@
       }
     },
     "layouts": {
-      "list": [
-        "id",
-        "project",
-        "start_time",
-        "description"
-      ],
       "edit": [
         [
           {
@@ -191,7 +199,19 @@
             "name": "description",
             "size": 6
           }
+        ],
+        [
+          {
+            "name": "duration",
+            "size": 4
+          }
         ]
+      ],
+      "list": [
+        "id",
+        "project",
+        "start_time",
+        "description"
       ]
     },
     "uid": "api::time-entry.time-entry"

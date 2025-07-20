@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "app_feedbacks",
+  "info": {
+    "singularName": "app-feedback",
+    "pluralName": "app-feedbacks",
+    "displayName": "App feedback"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "rating": {
+      "type": "integer"
+    },
+    "text": {
+      "type": "text"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    }
+  }
+}

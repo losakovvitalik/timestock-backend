@@ -6,6 +6,69 @@
   "locale": null,
   "permissions": [
     {
+      "documentId": "eh1od6d15o1cgtv64ag3n0pz",
+      "action": "plugin::content-manager.explorer.create",
+      "actionParameters": {},
+      "subject": "api::app-feedback.app-feedback",
+      "properties": {
+        "fields": [
+          "rating",
+          "text",
+          "user"
+        ]
+      },
+      "conditions": [],
+      "locale": null
+    },
+    {
+      "documentId": "ijqc344ynhwrigmhm2tzqoyv",
+      "action": "plugin::content-manager.explorer.delete",
+      "actionParameters": {},
+      "subject": "api::app-feedback.app-feedback",
+      "properties": {},
+      "conditions": [],
+      "locale": null
+    },
+    {
+      "documentId": "qaozefrleot1inoi1zygwaha",
+      "action": "plugin::content-manager.explorer.publish",
+      "actionParameters": {},
+      "subject": "api::app-feedback.app-feedback",
+      "properties": {},
+      "conditions": [],
+      "locale": null
+    },
+    {
+      "documentId": "n024amyhmeyac1kop11luh7s",
+      "action": "plugin::content-manager.explorer.read",
+      "actionParameters": {},
+      "subject": "api::app-feedback.app-feedback",
+      "properties": {
+        "fields": [
+          "rating",
+          "text",
+          "user"
+        ]
+      },
+      "conditions": [],
+      "locale": null
+    },
+    {
+      "documentId": "oscbalcwjd2y9ke1idmdpyhk",
+      "action": "plugin::content-manager.explorer.update",
+      "actionParameters": {},
+      "subject": "api::app-feedback.app-feedback",
+      "properties": {
+        "fields": [
+          "rating",
+          "text",
+          "user"
+        ]
+      },
+      "conditions": [],
+      "locale": null
+    },
+    {
       "documentId": "bit47lqkkmei2lwad1efplsz",
       "action": "plugin::content-manager.explorer.create",
       "actionParameters": {},
@@ -57,6 +120,72 @@
       "properties": {
         "fields": [
           "hex"
+        ]
+      },
+      "conditions": [],
+      "locale": null
+    },
+    {
+      "documentId": "mbhypyscw85sd331m1grtnd9",
+      "action": "plugin::content-manager.explorer.create",
+      "actionParameters": {},
+      "subject": "api::daily-aggregate.daily-aggregate",
+      "properties": {
+        "fields": [
+          "user",
+          "project",
+          "date",
+          "duration"
+        ]
+      },
+      "conditions": [],
+      "locale": null
+    },
+    {
+      "documentId": "yx7my7uq1zbpquzafhwm9cfq",
+      "action": "plugin::content-manager.explorer.delete",
+      "actionParameters": {},
+      "subject": "api::daily-aggregate.daily-aggregate",
+      "properties": {},
+      "conditions": [],
+      "locale": null
+    },
+    {
+      "documentId": "kbe0kwp8x7acmljfp3omo6bz",
+      "action": "plugin::content-manager.explorer.publish",
+      "actionParameters": {},
+      "subject": "api::daily-aggregate.daily-aggregate",
+      "properties": {},
+      "conditions": [],
+      "locale": null
+    },
+    {
+      "documentId": "tyaofw1ltmetjf5vkftq6k91",
+      "action": "plugin::content-manager.explorer.read",
+      "actionParameters": {},
+      "subject": "api::daily-aggregate.daily-aggregate",
+      "properties": {
+        "fields": [
+          "user",
+          "project",
+          "date",
+          "duration"
+        ]
+      },
+      "conditions": [],
+      "locale": null
+    },
+    {
+      "documentId": "ojsj0t84kvtmnvasx3o6lgpm",
+      "action": "plugin::content-manager.explorer.update",
+      "actionParameters": {},
+      "subject": "api::daily-aggregate.daily-aggregate",
+      "properties": {
+        "fields": [
+          "user",
+          "project",
+          "date",
+          "duration"
         ]
       },
       "conditions": [],
@@ -135,7 +264,7 @@
       "locale": null
     },
     {
-      "documentId": "lp2mwpx42t44sahtaqtwtmcj",
+      "documentId": "srzatwlhbduxy966y7b1svv6",
       "action": "plugin::content-manager.explorer.create",
       "actionParameters": {},
       "subject": "api::project.project",
@@ -147,7 +276,8 @@
           "time_entries",
           "members",
           "color",
-          "project_reminders"
+          "project_reminders",
+          "time_spent"
         ]
       },
       "conditions": [],
@@ -172,7 +302,7 @@
       "locale": null
     },
     {
-      "documentId": "uic6170t217pjwbc70255eee",
+      "documentId": "ezikrb5uispih5ufycxfocl2",
       "action": "plugin::content-manager.explorer.read",
       "actionParameters": {},
       "subject": "api::project.project",
@@ -184,14 +314,15 @@
           "time_entries",
           "members",
           "color",
-          "project_reminders"
+          "project_reminders",
+          "time_spent"
         ]
       },
       "conditions": [],
       "locale": null
     },
     {
-      "documentId": "hy828lfo1y3svcxjqh6jl3e7",
+      "documentId": "vriu9nedxog26o2pyatekngy",
       "action": "plugin::content-manager.explorer.update",
       "actionParameters": {},
       "subject": "api::project.project",
@@ -203,7 +334,8 @@
           "time_entries",
           "members",
           "color",
-          "project_reminders"
+          "project_reminders",
+          "time_spent"
         ]
       },
       "conditions": [],
@@ -270,7 +402,7 @@
       "locale": null
     },
     {
-      "documentId": "vkndb9dtlssgrbg9kdzz8wqd",
+      "documentId": "x8ykzyv6pn59cp8xn3jzxtr3",
       "action": "plugin::content-manager.explorer.create",
       "actionParameters": {},
       "subject": "api::time-entry.time-entry",
@@ -280,7 +412,8 @@
           "project",
           "start_time",
           "end_time",
-          "user"
+          "user",
+          "duration"
         ]
       },
       "conditions": [],
@@ -305,7 +438,7 @@
       "locale": null
     },
     {
-      "documentId": "dj02o6uj634gpt6wzrmatzt9",
+      "documentId": "adnad828jjjhxwlsh70erpo3",
       "action": "plugin::content-manager.explorer.read",
       "actionParameters": {},
       "subject": "api::time-entry.time-entry",
@@ -315,14 +448,15 @@
           "project",
           "start_time",
           "end_time",
-          "user"
+          "user",
+          "duration"
         ]
       },
       "conditions": [],
       "locale": null
     },
     {
-      "documentId": "t6lnqufsjmewcezuoqhuoqvd",
+      "documentId": "qtd3xnz6sam0xnmlpuuq9vjz",
       "action": "plugin::content-manager.explorer.update",
       "actionParameters": {},
       "subject": "api::time-entry.time-entry",
@@ -332,7 +466,8 @@
           "project",
           "start_time",
           "end_time",
-          "user"
+          "user",
+          "duration"
         ]
       },
       "conditions": [],
@@ -618,7 +753,7 @@
       "locale": null
     },
     {
-      "documentId": "caed2urcwr7ij50icwn4y4gj",
+      "documentId": "mtj5mah05i0t9vg4s8zwann3",
       "action": "plugin::content-manager.explorer.create",
       "actionParameters": {},
       "subject": "plugin::users-permissions.user",
@@ -635,7 +770,8 @@
           "role",
           "created_projects",
           "projects",
-          "otp_code"
+          "otp_code",
+          "timezone"
         ]
       },
       "conditions": [],
@@ -660,7 +796,7 @@
       "locale": null
     },
     {
-      "documentId": "ogngts88ul6r9nxa9hcku5w0",
+      "documentId": "gop49t1y4b1axrnazv7nveak",
       "action": "plugin::content-manager.explorer.read",
       "actionParameters": {},
       "subject": "plugin::users-permissions.user",
@@ -677,14 +813,15 @@
           "role",
           "created_projects",
           "projects",
-          "otp_code"
+          "otp_code",
+          "timezone"
         ]
       },
       "conditions": [],
       "locale": null
     },
     {
-      "documentId": "cc3qtdzqvxa9explk97drvx5",
+      "documentId": "hpi8n7e95j3o1gs6bgn1419w",
       "action": "plugin::content-manager.explorer.update",
       "actionParameters": {},
       "subject": "plugin::users-permissions.user",
@@ -701,7 +838,8 @@
           "role",
           "created_projects",
           "projects",
-          "otp_code"
+          "otp_code",
+          "timezone"
         ]
       },
       "conditions": [],

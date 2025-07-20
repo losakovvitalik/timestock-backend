@@ -1,13 +1,13 @@
 {
-  "key": "plugin_content_manager_configuration_content_types::api::project.project",
+  "key": "plugin_content_manager_configuration_content_types::api::daily-aggregate.daily-aggregate",
   "value": {
     "settings": {
       "bulkable": true,
       "filterable": true,
       "searchable": true,
       "pageSize": 10,
-      "mainField": "name",
-      "defaultSortBy": "name",
+      "mainField": "documentId",
+      "defaultSortBy": "documentId",
       "defaultSortOrder": "ASC"
     },
     "metadatas": {
@@ -19,37 +19,9 @@
           "sortable": true
         }
       },
-      "name": {
+      "user": {
         "edit": {
-          "label": "name",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true
-        },
-        "list": {
-          "label": "name",
-          "searchable": true,
-          "sortable": true
-        }
-      },
-      "description": {
-        "edit": {
-          "label": "description",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true
-        },
-        "list": {
-          "label": "description",
-          "searchable": true,
-          "sortable": true
-        }
-      },
-      "owner": {
-        "edit": {
-          "label": "owner",
+          "label": "user",
           "description": "",
           "placeholder": "",
           "visible": true,
@@ -57,81 +29,50 @@
           "mainField": "username"
         },
         "list": {
-          "label": "owner",
+          "label": "user",
           "searchable": true,
           "sortable": true
         }
       },
-      "time_entries": {
+      "project": {
         "edit": {
-          "label": "time_entries",
+          "label": "project",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true,
-          "mainField": "description"
+          "mainField": "name"
         },
         "list": {
-          "label": "time_entries",
-          "searchable": false,
-          "sortable": false
-        }
-      },
-      "members": {
-        "edit": {
-          "label": "members",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true,
-          "mainField": "username"
-        },
-        "list": {
-          "label": "members",
-          "searchable": false,
-          "sortable": false
-        }
-      },
-      "color": {
-        "edit": {
-          "label": "color",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true,
-          "mainField": "hex"
-        },
-        "list": {
-          "label": "color",
+          "label": "project",
           "searchable": true,
           "sortable": true
         }
       },
-      "project_reminders": {
+      "date": {
         "edit": {
-          "label": "project_reminders",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true,
-          "mainField": "text"
-        },
-        "list": {
-          "label": "project_reminders",
-          "searchable": false,
-          "sortable": false
-        }
-      },
-      "time_spent": {
-        "edit": {
-          "label": "time_spent",
+          "label": "date",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "time_spent",
+          "label": "date",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "duration": {
+        "edit": {
+          "label": "duration",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "duration",
           "searchable": true,
           "sortable": true
         }
@@ -206,54 +147,34 @@
     "layouts": {
       "list": [
         "id",
-        "name",
-        "description",
-        "owner"
+        "user",
+        "project",
+        "date"
       ],
       "edit": [
         [
           {
-            "name": "name",
+            "name": "user",
             "size": 6
           },
           {
-            "name": "description",
+            "name": "project",
             "size": 6
           }
         ],
         [
           {
-            "name": "owner",
-            "size": 6
+            "name": "date",
+            "size": 4
           },
           {
-            "name": "time_entries",
-            "size": 6
-          }
-        ],
-        [
-          {
-            "name": "members",
-            "size": 6
-          },
-          {
-            "name": "color",
-            "size": 6
-          }
-        ],
-        [
-          {
-            "name": "project_reminders",
-            "size": 6
-          },
-          {
-            "name": "time_spent",
+            "name": "duration",
             "size": 4
           }
         ]
       ]
     },
-    "uid": "api::project.project"
+    "uid": "api::daily-aggregate.daily-aggregate"
   },
   "type": "object",
   "environment": null,

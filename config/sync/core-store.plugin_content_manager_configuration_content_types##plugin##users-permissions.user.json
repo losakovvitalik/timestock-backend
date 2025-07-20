@@ -190,6 +190,20 @@
           "sortable": true
         }
       },
+      "timezone": {
+        "edit": {
+          "label": "timezone",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "timezone",
+          "searchable": true,
+          "sortable": true
+        }
+      },
       "createdAt": {
         "edit": {
           "label": "createdAt",
@@ -308,6 +322,10 @@
         [
           {
             "name": "otp_code",
+            "size": 6
+          },
+          {
+            "name": "timezone",
             "size": 6
           }
         ]
