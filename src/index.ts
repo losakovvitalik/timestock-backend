@@ -11,6 +11,7 @@ webpush.setVapidDetails(
 export default {
   register(/* { strapi }: { strapi: Core.Strapi } */) {},
   async bootstrap(/* { strapi }: { strapi: Core.Strapi } */) {
+    
     // console.log(getDatesInterval('2025-07-05', '2025-07-11'))
 
     // const projects = await strapi.documents('api::project.project').findMany();

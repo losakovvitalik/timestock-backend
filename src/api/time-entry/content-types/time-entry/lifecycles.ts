@@ -1,7 +1,13 @@
 import { Data } from '@strapi/strapi';
-import { AfterUpdateEvent, BeforeUpdateEvent } from '../../../../../types/strapi/lifecycles';
+import {
+  AfterDeleteEvent,
+  AfterUpdateEvent,
+  BeforeDeleteEvent,
+  BeforeUpdateEvent,
+} from '../../../../../types/strapi/lifecycles';
 import { getDatesInterval } from '../../../../shared/utils/time';
 import { DailyAggregateService } from '../../../daily-aggregate/services/daily-aggregate.service';
+import { ProjectService } from '../../../project/services/project.service';
 
 export default {
   async beforeUpdate(
@@ -45,7 +51,7 @@ export default {
       },
     });
 
-    // если трек не привязан к проекту, то не надо и пересчитывать
+    // если трек времени не привязан к проекту, то не надо и пересчитывать
     if (!timeEntry.project) return;
 
     const dates = new Set(
@@ -58,6 +64,40 @@ export default {
         projectDocumentId: timeEntry.project.documentId,
         userId: timeEntry.user.id,
       });
+    }
+  },
+  async beforeDelete(event: BeforeDeleteEvent) {
+    /**
+     * пересчет общего времени и за определенные даты
+     * при удалении трека времени
+     */
+    const timeEntry = await strapi.documents('api::time-entry.time-entry').findFirst({
+      filters: {
+        id: event?.params?.where?.id,
+      },
+      populate: {
+        project: true,
+        user: true,
+      },
+    });
+
+    if (timeEntry.project) {
+      const dates = new Set(
+        getDatesInterval(String(timeEntry.start_time), String(timeEntry.end_time))
+      );
+
+      for (const date of dates) {
+        await DailyAggregateService.recalculateForProject({
+          date,
+          projectDocumentId: timeEntry.project.documentId,
+          userId: timeEntry.user.id,
+        });
+
+        await ProjectService.recalculateTotalDuration(
+          timeEntry.project.documentId,
+          -timeEntry.duration
+        );
+      }
     }
   },
 };
