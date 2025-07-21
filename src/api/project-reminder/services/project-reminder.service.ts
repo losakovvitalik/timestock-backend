@@ -1,4 +1,4 @@
-import { addDays, set } from 'date-fns';
+import { DateTime } from 'luxon';
 import { PushService } from '../../../shared/services/push.service';
 
 export class ProjectReminderService {
@@ -27,6 +27,9 @@ export class ProjectReminderService {
   static async calcNextTime(reminderDocumentId: string) {
     const reminder = await strapi.documents('api::project-reminder.project-reminder').findOne({
       documentId: reminderDocumentId,
+      populate: {
+        user: true,
+      },
     });
 
     const options = reminder.recurrence_options as {
@@ -34,9 +37,14 @@ export class ProjectReminderService {
       time: string;
     };
 
-    const tomorrow = addDays(new Date(), 1);
-    const [hours, minutes] = options.time.split(':');
+    const [hour, minutes] = options.time.split(':');
 
-    return set(tomorrow, { hours: parseInt(hours), minutes: parseInt(minutes) });
+    const now = DateTime.now().setZone(reminder.user.timezone);
+    const next = now
+      .plus({ days: 1 })
+      .set({ hour: parseInt(hour), minute: parseInt(minutes) })
+      .toUTC();
+
+    return next.toJSDate().toISOString();
   }
 }

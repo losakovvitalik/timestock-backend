@@ -16,8 +16,6 @@ export default {
         },
       });
 
-      console.log(reminders)
-
       for (const reminder of reminders) {
         try {
           await ProjectReminderService.sendPush(reminder.documentId);
@@ -30,7 +28,6 @@ export default {
     },
     options: {
       rule: '* * * * *',
-      tz: 'Europe/Moscow',
     },
   },
 };

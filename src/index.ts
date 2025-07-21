@@ -11,7 +11,20 @@ webpush.setVapidDetails(
 export default {
   register(/* { strapi }: { strapi: Core.Strapi } */) {},
   async bootstrap(/* { strapi }: { strapi: Core.Strapi } */) {
-    
+    const timeEntries = await strapi.documents('api::time-entry.time-entry').findMany();
+
+    for (const timeEntry of timeEntries) {
+      await strapi.documents('api::time-entry.time-entry').update({
+        documentId: timeEntry.documentId,
+        data: {
+          duration: Math.floor(
+            (new Date(timeEntry.end_time).getTime() - new Date(timeEntry.start_time).getTime()) /
+              1000
+          ),
+        },
+      });
+    }
+
     // console.log(getDatesInterval('2025-07-05', '2025-07-11'))
 
     // const projects = await strapi.documents('api::project.project').findMany();
