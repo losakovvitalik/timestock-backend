@@ -25,8 +25,8 @@ if [ ! -d "$NVM_DIR" ]; then
 fi
 # shellcheck source=/dev/null
 source "$NVM_DIR/nvm.sh"
-nvm install "$NODE_VERSION" -q
-nvm use "$NODE_VERSION"    -q
+nvm install "$NODE_VERSION"
+nvm use "$NODE_VERSION"
 
 command -v pnpm >/dev/null 2>&1 || npm i -g pnpm -s
 command -v pm2  >/dev/null 2>&1 || pnpm add -g pm2
