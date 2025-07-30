@@ -40,11 +40,21 @@ export class ProjectReminderService {
     const [hour, minutes] = options.time.split(':');
 
     const now = DateTime.now().setZone(reminder.user.timezone);
-    const next = now
-      .plus({ days: 1 })
-      .set({ hour: parseInt(hour), minute: parseInt(minutes) })
-      .toUTC();
+    let next = now.set({ hour: parseInt(hour), minute: parseInt(minutes) });
 
-    return next.toJSDate().toISOString();
+    console.log(next, now);
+
+    // Если сегодня это время уже прошло, то отправлять завтра
+    // это нужно при редактировании и создании
+    if (next.toJSDate().getTime() < now.toJSDate().getTime()) {
+      console.log('lower');
+      next = next.plus({
+        day: 1,
+      });
+    }
+
+    console.log(next, now);
+
+    return next.toUTC().toJSDate().toISOString();
   }
 }

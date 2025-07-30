@@ -1,0 +1,34 @@
+name: Deploy backend
+
+on:
+  push:
+    branches: [main]        # деплой только с main
+  workflow_dispatch:        # + кнопка «Run workflow» в Actions
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    concurrency:            # чтобы не крутилось два деплоя одновременно
+      group: "deploy-backend"
+      cancel-in-progress: true
+
+    steps:
+      - name: Checkout (для логов)
+        uses: actions/checkout@v4
+
+      - name: Start SSH agent & add key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_KEY }}
+
+      - name: Add server to known_hosts
+        # чтобы ssh не спросил "Are you sure you want to continue (yes/no)?"
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Run deploy.sh on server
+        run: |
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "\
+            cd /root/timestock-backend && \
+            ./deploy.sh"
