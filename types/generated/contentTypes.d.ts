@@ -531,6 +531,7 @@ export interface ApiTimeEntryTimeEntry extends Struct.CollectionTypeSchema {
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::time-entry.time-entry'> &
       Schema.Attribute.Private;
+    long_track_notified_at: Schema.Attribute.DateTime & Schema.Attribute.Private;
     project: Schema.Attribute.Relation<'manyToOne', 'api::project.project'>;
     publishedAt: Schema.Attribute.DateTime;
     start_time: Schema.Attribute.DateTime;

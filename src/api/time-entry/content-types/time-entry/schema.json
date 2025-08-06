@@ -34,6 +34,10 @@
     },
     "duration": {
       "type": "integer"
+    },
+    "long_track_notified_at": {
+      "type": "datetime",
+      "private": true
     }
   }
 }
