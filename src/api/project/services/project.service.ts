@@ -3,6 +3,7 @@ import { DocumentId } from '../../../../types/strapi/types';
 export class ProjectService {
   // обновить общее потраченное время на проект
   static async recalculateTotalDuration(projectDocumentId: DocumentId, additionalValue?: number) {
+    console.log(additionalValue);
     const timeSpent = (await this.getTotalDuration(projectDocumentId)) + (additionalValue || 0);
     console.log('timeSpent', timeSpent);
 

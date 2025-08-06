@@ -40,6 +40,8 @@ export default factories.createCoreController('api::time-entry.time-entry', {
     const newProjectId =
       typeof data.project === 'string' ? data.project : (data.project?.documentId ?? null);
 
+    
+
     if (oldEntity) {
       if (oldEntity.project && data.project) {
         /**
@@ -61,10 +63,11 @@ export default factories.createCoreController('api::time-entry.time-entry', {
          * который был привязан до изменений
          */
         await ProjectService.recalculateTotalDuration(oldProjectId);
-      } else if (data.start_time || data.end_time) {
+      } else if (oldEntity.project && (data.start_time || data.end_time)) {
         /**
          * если изменил только время начала
          * или время конца трека времени
+         * и при этом до этого уже был указан проект
          */
         await ProjectService.recalculateTotalDuration(oldProjectId);
       }

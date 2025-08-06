@@ -28,6 +28,15 @@ export default {
         },
       });
 
+      console.log(
+        'duration',
+        Math.floor(
+          (new Date(event.params.data.end_time).getTime() -
+            new Date(timeEntry.start_time).getTime()) /
+            1000
+        )
+      );
+
       event.params.data.duration = Math.floor(
         (new Date(event.params.data.end_time).getTime() -
           new Date(timeEntry.start_time).getTime()) /
