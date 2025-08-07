@@ -42,18 +42,13 @@ export class ProjectReminderService {
     const now = DateTime.now().setZone(reminder.user.timezone);
     let next = now.set({ hour: parseInt(hour), minute: parseInt(minutes) });
 
-    console.log(next, now);
-
     // Если сегодня это время уже прошло, то отправлять завтра
     // это нужно при редактировании и создании
     if (next.toJSDate().getTime() < now.toJSDate().getTime()) {
-      console.log('lower');
       next = next.plus({
         day: 1,
       });
     }
-
-    console.log(next, now);
 
     return next.toUTC().toJSDate().toISOString();
   }

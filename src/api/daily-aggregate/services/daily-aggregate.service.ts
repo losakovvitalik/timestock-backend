@@ -86,8 +86,6 @@ export class DailyAggregateService {
         },
       });
 
-    console.log(dailyAggregate, date, projectDocumentId, userId);
-
     if (!dailyAggregate) {
       return;
     }
@@ -104,8 +102,6 @@ export class DailyAggregateService {
       projectDocumentId,
       timezone: user.timezone,
     });
-
-    console.log('totalSeconds', totalSeconds);
 
     return await strapi.documents('api::daily-aggregate.daily-aggregate').update({
       documentId: dailyAggregate.documentId,

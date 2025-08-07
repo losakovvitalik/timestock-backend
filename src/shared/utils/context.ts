@@ -27,7 +27,6 @@ export default class Context {
     const { secret } = strapi.config.get('admin.auth', {}) as any;
     try {
       const result = jwt.verify(this.ctx.request.header.authorization.split(' ')[1], secret);
-      console.log('result', result);
       return true;
     } catch (error) {
       return false;

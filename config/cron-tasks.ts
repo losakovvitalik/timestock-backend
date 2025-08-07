@@ -44,7 +44,7 @@ export default {
     // Добавить в дальнейшем пагинацию
     task: async ({ strapi }: { strapi: Core.Strapi }) => {
       try {
-        const MAX_RUNNING_DURATION = Duration.fromObject({ hours: 1 });
+        const MAX_RUNNING_DURATION = Duration.fromObject({ hours: 8 });
 
         const cutoffTime = DateTime.now().minus(MAX_RUNNING_DURATION).toJSDate();
 
@@ -57,7 +57,7 @@ export default {
               $lte: cutoffTime,
             },
             long_track_notified_at: {
-              $null: true,
+              $lte: cutoffTime,
             },
           },
           populate: {
