@@ -1,7 +1,7 @@
 import webpush, { PushSubscription, WebPushError } from 'web-push';
 
 export class PushService {
-  static async sendToUser(userDocumentId: string, msg: { title: string; text: string }) {
+  static async sendToUser(userDocumentId: string, msg: { title: string; text?: string }) {
     const subs = await strapi.documents('api::push-subscription.push-subscription').findMany({
       filters: {
         user: {
