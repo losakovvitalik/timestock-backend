@@ -7,11 +7,18 @@ import Context from '../../../shared/utils/context';
 import { ProjectService } from '../../project/services/project.service';
 
 export default factories.createCoreController('api::time-entry.time-entry', {
-  create(ctx) {
+  async create(ctx) {
     const context = new Context(ctx);
-    context.getBody().data.user = context.getUserId();
+    const body = context.getBody();
 
-    return super.create(ctx);
+    body.data.user = context.getUserId();
+    const res = await super.create(ctx);
+
+    if (body.data.end_time && body.data.project) {
+      await ProjectService.recalculateTotalDuration(body.data.project);
+    }
+
+    return res;
   },
   async update(ctx) {
     /**
@@ -39,8 +46,6 @@ export default factories.createCoreController('api::time-entry.time-entry', {
     const oldProjectId = oldEntity.project?.documentId;
     const newProjectId =
       typeof data.project === 'string' ? data.project : (data.project?.documentId ?? null);
-
-    
 
     if (oldEntity) {
       if (oldEntity.project && data.project) {

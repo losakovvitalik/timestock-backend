@@ -8,8 +8,25 @@ import {
 import { getDatesInterval } from '../../../../shared/utils/time';
 import { DailyAggregateService } from '../../../daily-aggregate/services/daily-aggregate.service';
 import { ProjectService } from '../../../project/services/project.service';
+import { BeforeCreateEvent } from '../../../../shared/types/event';
 
 export default {
+  async beforeCreate(
+    event: BeforeCreateEvent<{
+      end_time?: string;
+      start_time?: string;
+      duration?: number;
+      project: { set: { id: number }[] };
+    }>
+  ) {
+    if (event?.params?.data?.end_time) {
+      event.params.data.duration = Math.floor(
+        (new Date(event.params.data.end_time).getTime() -
+          new Date(event.params.data.start_time).getTime()) /
+          1000
+      ); 
+    }
+  },
   async beforeUpdate(
     event: BeforeUpdateEvent<{
       end_time?: string;
@@ -27,15 +44,6 @@ export default {
           project: true,
         },
       });
-
-      console.log(
-        'duration',
-        Math.floor(
-          (new Date(event.params.data.end_time).getTime() -
-            new Date(timeEntry.start_time).getTime()) /
-            1000
-        )
-      );
 
       event.params.data.duration = Math.floor(
         (new Date(event.params.data.end_time).getTime() -
