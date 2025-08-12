@@ -44,7 +44,7 @@ export default {
     // Добавить в дальнейшем пагинацию
     task: async ({ strapi }: { strapi: Core.Strapi }) => {
       try {
-        const MAX_RUNNING_DURATION = Duration.fromObject({ hours: 8 });
+        const MAX_RUNNING_DURATION = Duration.fromObject({ hours: 1 });
 
         const cutoffTime = DateTime.now().minus(MAX_RUNNING_DURATION).toJSDate();
 
@@ -56,18 +56,29 @@ export default {
             start_time: {
               $lte: cutoffTime,
             },
-            long_track_notified_at: {
-              $lte: cutoffTime,
-            },
+            $or: [
+              {
+                long_track_notified_at: {
+                  $lte: cutoffTime,
+                },
+              },
+              {
+                long_track_notified_at: {
+                  $null: true,
+                },
+              },
+            ],
           },
           populate: {
             project: true,
-            user: true,
+            user: {
+              fields: [],
+            },
           },
         });
 
         for (const entry of timeEntries) {
-          let msg: string = null;
+          let msg: string = '';
           if (entry.project) {
             msg += `${entry.project.name}: `;
           }
@@ -89,7 +100,7 @@ export default {
           });
         }
       } catch (error) {
-        console.error(error);
+        console.error(`Error in CRON task longTrackNotification: ${error}`);
       }
     },
     options: {
