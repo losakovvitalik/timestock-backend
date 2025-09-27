@@ -4,7 +4,7 @@
   "info": {
     "singularName": "project-reminder",
     "pluralName": "project-reminders",
-    "displayName": "project reminder"
+    "displayName": "Project reminder"
   },
   "options": {
     "draftAndPublish": false
@@ -44,6 +44,10 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user"
+    },
+    "repeatable": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

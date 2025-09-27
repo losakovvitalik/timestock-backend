@@ -418,7 +418,7 @@ export interface ApiDailyAggregateDailyAggregate extends Struct.CollectionTypeSc
 export interface ApiProjectReminderProjectReminder extends Struct.CollectionTypeSchema {
   collectionName: 'project_reminders';
   info: {
-    displayName: 'project reminder';
+    displayName: 'Project reminder';
     pluralName: 'project-reminders';
     singularName: 'project-reminder';
   };
@@ -439,6 +439,7 @@ export interface ApiProjectReminderProjectReminder extends Struct.CollectionType
     project: Schema.Attribute.Relation<'manyToOne', 'api::project.project'>;
     publishedAt: Schema.Attribute.DateTime;
     recurrence_options: Schema.Attribute.JSON;
+    repeatable: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     text: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> & Schema.Attribute.Private;

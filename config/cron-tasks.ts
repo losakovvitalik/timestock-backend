@@ -1,7 +1,6 @@
 import { Core } from '@strapi/strapi';
-import { ProjectReminderService } from '../src/api/project-reminder/services/project-reminder.service';
-import { subSeconds } from 'date-fns';
 import { DateTime, Duration } from 'luxon';
+import { ProjectReminderService } from '../src/api/project-reminder/services/project-reminder.service';
 import { PushService } from '../src/shared/services/push.service';
 
 export default {
@@ -10,6 +9,7 @@ export default {
    */
   sendNotifications: {
     task: async ({ strapi }: { strapi: Core.Strapi }) => {
+      console.log(new Date().toISOString());
       try {
         // Добавить в дальнейшем пагинацию
         const reminders = await strapi
@@ -22,6 +22,8 @@ export default {
               enabled: true,
             },
           });
+
+        console.log(reminders);
 
         for (const reminder of reminders) {
           try {
@@ -44,7 +46,7 @@ export default {
     // Добавить в дальнейшем пагинацию
     task: async ({ strapi }: { strapi: Core.Strapi }) => {
       try {
-        const MAX_RUNNING_DURATION = Duration.fromObject({ hours: 1 });
+        const MAX_RUNNING_DURATION = Duration.fromObject({ hours: 8 });
 
         const cutoffTime = DateTime.now().minus(MAX_RUNNING_DURATION).toJSDate();
 

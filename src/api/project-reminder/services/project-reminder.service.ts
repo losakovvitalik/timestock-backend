@@ -1,6 +1,11 @@
 import { DateTime } from 'luxon';
 import { PushService } from '../../../shared/services/push.service';
 
+export type RecurrenceOptions = {
+  interval: 'DAILY';
+  time: string;
+};
+
 export class ProjectReminderService {
   static async sendPush(reminderDocumentId: string) {
     const reminder = await strapi.documents('api::project-reminder.project-reminder').findOne({
@@ -16,15 +21,24 @@ export class ProjectReminderService {
       text: reminder.text,
     });
 
-    await strapi.documents('api::project-reminder.project-reminder').update({
-      documentId: reminderDocumentId,
-      data: {
-        next_at: await this.calcNextTime(reminderDocumentId),
-      },
-    });
+    if (!reminder.repeatable) {
+      await strapi.documents('api::project-reminder.project-reminder').update({
+        documentId: reminderDocumentId,
+        data: {
+          next_at: await this.calcNextTimeByReminder(reminderDocumentId),
+        },
+      });
+    } else {
+      await strapi.documents('api::project-reminder.project-reminder').update({
+        documentId: reminderDocumentId,
+        data: {
+          enabled: false,
+        },
+      });
+    }
   }
 
-  static async calcNextTime(reminderDocumentId: string) {
+  static async calcNextTimeByReminder(reminderDocumentId: string) {
     const reminder = await strapi.documents('api::project-reminder.project-reminder').findOne({
       documentId: reminderDocumentId,
       populate: {
@@ -32,15 +46,35 @@ export class ProjectReminderService {
       },
     });
 
-    const options = reminder.recurrence_options as {
+    const options = reminder.recurrence_options as RecurrenceOptions;
+
+    return this.calcNextTime({
+      recurrenceOptions: options,
+      userTimezone: reminder.user.timezone,
+    });
+  }
+
+  static calcNextTime({
+    recurrenceOptions,
+    userTimezone,
+  }: {
+    userTimezone: string;
+    recurrenceOptions: RecurrenceOptions;
+  }) {
+    const options = recurrenceOptions as {
       interval: 'DAILY';
       time: string;
     };
 
     const [hour, minutes] = options.time.split(':');
 
-    const now = DateTime.now().setZone(reminder.user.timezone);
-    let next = now.set({ hour: parseInt(hour), minute: parseInt(minutes) });
+    const now = DateTime.now().setZone(userTimezone);
+    let next = now.set({
+      hour: parseInt(hour),
+      minute: parseInt(minutes),
+      second: 0,
+      millisecond: 0,
+    });
 
     // Если сегодня это время уже прошло, то отправлять завтра
     // это нужно при редактировании и создании
