@@ -15,10 +15,10 @@
     "upgrade:dry": "npx @strapi/upgrade latest --dry"
   },
   "dependencies": {
-    "@strapi/plugin-cloud": "^5.17.0",
-    "@strapi/plugin-users-permissions": "^5.17.0",
-    "@strapi/provider-email-nodemailer": "^5.17.0",
-    "@strapi/strapi": "^5.17.0",
+    "@strapi/plugin-cloud": "5.24.1",
+    "@strapi/plugin-users-permissions": "5.24.1",
+    "@strapi/provider-email-nodemailer": "5.24.1",
+    "@strapi/strapi": "5.24.1",
     "date-fns": "^4.1.0",
     "jsonwebtoken": "^9.0.2",
     "luxon": "^3.7.1",
