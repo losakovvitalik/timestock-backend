@@ -9,7 +9,8 @@
     "user",
     "daily-aggregate",
     "project",
-    "app-feedback"
+    "app-feedback",
+    "task"
   ],
   "cSpell.words": [
     "luxon",

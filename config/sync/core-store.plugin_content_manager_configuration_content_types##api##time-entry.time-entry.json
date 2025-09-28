@@ -105,6 +105,35 @@
           "sortable": true
         }
       },
+      "long_track_notified_at": {
+        "edit": {
+          "label": "long_track_notified_at",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "long_track_notified_at",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "task": {
+        "edit": {
+          "label": "task",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "name"
+        },
+        "list": {
+          "label": "task",
+          "searchable": true,
+          "sortable": true
+        }
+      },
       "createdAt": {
         "edit": {
           "label": "createdAt",
@@ -173,6 +202,12 @@
       }
     },
     "layouts": {
+      "list": [
+        "id",
+        "project",
+        "start_time",
+        "description"
+      ],
       "edit": [
         [
           {
@@ -204,14 +239,18 @@
           {
             "name": "duration",
             "size": 4
+          },
+          {
+            "name": "long_track_notified_at",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "task",
+            "size": 6
           }
         ]
-      ],
-      "list": [
-        "id",
-        "project",
-        "start_time",
-        "description"
       ]
     },
     "uid": "api::time-entry.time-entry"

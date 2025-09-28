@@ -1,13 +1,13 @@
 {
-  "key": "plugin_content_manager_configuration_content_types::api::project-reminder.project-reminder",
+  "key": "plugin_content_manager_configuration_content_types::admin::session",
   "value": {
     "settings": {
       "bulkable": true,
       "filterable": true,
       "searchable": true,
       "pageSize": 10,
-      "mainField": "text",
-      "defaultSortBy": "text",
+      "mainField": "userId",
+      "defaultSortBy": "userId",
       "defaultSortOrder": "ASC"
     },
     "metadatas": {
@@ -19,102 +19,128 @@
           "sortable": true
         }
       },
-      "project": {
+      "userId": {
         "edit": {
-          "label": "project",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true,
-          "mainField": "name"
-        },
-        "list": {
-          "label": "project",
-          "searchable": true,
-          "sortable": true
-        }
-      },
-      "text": {
-        "edit": {
-          "label": "text",
+          "label": "userId",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "text",
+          "label": "userId",
           "searchable": true,
           "sortable": true
         }
       },
-      "recurrence_options": {
+      "sessionId": {
         "edit": {
-          "label": "recurrence_options",
+          "label": "sessionId",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "recurrence_options",
-          "searchable": false,
-          "sortable": false
+          "label": "sessionId",
+          "searchable": true,
+          "sortable": true
         }
       },
-      "next_at": {
+      "childId": {
         "edit": {
-          "label": "next_at",
+          "label": "childId",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "next_at",
+          "label": "childId",
           "searchable": true,
           "sortable": true
         }
       },
-      "enabled": {
+      "deviceId": {
         "edit": {
-          "label": "enabled",
+          "label": "deviceId",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "enabled",
+          "label": "deviceId",
           "searchable": true,
           "sortable": true
         }
       },
-      "user": {
+      "origin": {
         "edit": {
-          "label": "user",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true,
-          "mainField": "username"
-        },
-        "list": {
-          "label": "user",
-          "searchable": true,
-          "sortable": true
-        }
-      },
-      "repeatable": {
-        "edit": {
-          "label": "repeatable",
+          "label": "origin",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "repeatable",
+          "label": "origin",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "expiresAt": {
+        "edit": {
+          "label": "expiresAt",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "expiresAt",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "absoluteExpiresAt": {
+        "edit": {
+          "label": "absoluteExpiresAt",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "absoluteExpiresAt",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "status": {
+        "edit": {
+          "label": "status",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "status",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "type": {
+        "edit": {
+          "label": "type",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "type",
           "searchable": true,
           "sortable": true
         }
@@ -189,50 +215,60 @@
     "layouts": {
       "list": [
         "id",
-        "project",
-        "text",
-        "next_at"
+        "userId",
+        "sessionId",
+        "childId"
       ],
       "edit": [
         [
           {
-            "name": "project",
+            "name": "userId",
             "size": 6
           },
           {
-            "name": "text",
+            "name": "sessionId",
             "size": 6
           }
         ],
         [
           {
-            "name": "recurrence_options",
-            "size": 12
+            "name": "childId",
+            "size": 6
+          },
+          {
+            "name": "deviceId",
+            "size": 6
           }
         ],
         [
           {
-            "name": "next_at",
+            "name": "origin",
             "size": 6
           },
           {
-            "name": "enabled",
-            "size": 4
+            "name": "expiresAt",
+            "size": 6
           }
         ],
         [
           {
-            "name": "user",
+            "name": "absoluteExpiresAt",
             "size": 6
           },
           {
-            "name": "repeatable",
-            "size": 4
+            "name": "status",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "type",
+            "size": 6
           }
         ]
       ]
     },
-    "uid": "api::project-reminder.project-reminder"
+    "uid": "admin::session"
   },
   "type": "object",
   "environment": null,

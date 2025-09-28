@@ -76,6 +76,31 @@
       "locale": null
     },
     {
+      "documentId": "j7b6v4teck8u8rbehmzllhnt",
+      "action": "api::task.task.create",
+      "locale": null
+    },
+    {
+      "documentId": "re1bcafefcki6awpwpk4ec3n",
+      "action": "api::task.task.delete",
+      "locale": null
+    },
+    {
+      "documentId": "gcfnj7dylawpik1oy8o28z48",
+      "action": "api::task.task.find",
+      "locale": null
+    },
+    {
+      "documentId": "xw9nfbtd9gb9jvtumi4mfw7e",
+      "action": "api::task.task.findOne",
+      "locale": null
+    },
+    {
+      "documentId": "wq9ckf3brndrzdrpumzqfl6r",
+      "action": "api::task.task.update",
+      "locale": null
+    },
+    {
       "documentId": "o2oh8rd1thnqu5t8nrwernju",
       "action": "api::time-entry.time-entry.create",
       "locale": null

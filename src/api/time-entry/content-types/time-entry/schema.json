@@ -38,6 +38,12 @@
     "long_track_notified_at": {
       "type": "datetime",
       "private": true
+    },
+    "task": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::task.task",
+      "inversedBy": "time_entries"
     }
   }
 }

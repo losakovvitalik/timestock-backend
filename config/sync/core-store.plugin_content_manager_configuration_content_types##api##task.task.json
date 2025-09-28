@@ -1,13 +1,13 @@
 {
-  "key": "plugin_content_manager_configuration_content_types::api::project-reminder.project-reminder",
+  "key": "plugin_content_manager_configuration_content_types::api::task.task",
   "value": {
     "settings": {
       "bulkable": true,
       "filterable": true,
       "searchable": true,
       "pageSize": 10,
-      "mainField": "text",
-      "defaultSortBy": "text",
+      "mainField": "name",
+      "defaultSortBy": "name",
       "defaultSortOrder": "ASC"
     },
     "metadatas": {
@@ -15,6 +15,34 @@
         "edit": {},
         "list": {
           "label": "id",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "name": {
+        "edit": {
+          "label": "name",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "name",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "description": {
+        "edit": {
+          "label": "description",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "description",
           "searchable": true,
           "sortable": true
         }
@@ -34,65 +62,66 @@
           "sortable": true
         }
       },
-      "text": {
+      "time_entries": {
         "edit": {
-          "label": "text",
+          "label": "time_entries",
           "description": "",
           "placeholder": "",
           "visible": true,
-          "editable": true
+          "editable": true,
+          "mainField": "description"
         },
         "list": {
-          "label": "text",
-          "searchable": true,
-          "sortable": true
-        }
-      },
-      "recurrence_options": {
-        "edit": {
-          "label": "recurrence_options",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true
-        },
-        "list": {
-          "label": "recurrence_options",
+          "label": "time_entries",
           "searchable": false,
           "sortable": false
         }
       },
-      "next_at": {
+      "time_spent": {
         "edit": {
-          "label": "next_at",
+          "label": "time_spent",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "next_at",
+          "label": "time_spent",
           "searchable": true,
           "sortable": true
         }
       },
-      "enabled": {
+      "estimated_time": {
         "edit": {
-          "label": "enabled",
+          "label": "estimated_time",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "enabled",
+          "label": "estimated_time",
           "searchable": true,
           "sortable": true
         }
       },
-      "user": {
+      "completed": {
         "edit": {
-          "label": "user",
+          "label": "completed",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "completed",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "author": {
+        "edit": {
+          "label": "author",
           "description": "",
           "placeholder": "",
           "visible": true,
@@ -100,21 +129,7 @@
           "mainField": "username"
         },
         "list": {
-          "label": "user",
-          "searchable": true,
-          "sortable": true
-        }
-      },
-      "repeatable": {
-        "edit": {
-          "label": "repeatable",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true
-        },
-        "list": {
-          "label": "repeatable",
+          "label": "author",
           "searchable": true,
           "sortable": true
         }
@@ -189,50 +204,54 @@
     "layouts": {
       "list": [
         "id",
-        "project",
-        "text",
-        "next_at"
+        "name",
+        "description",
+        "project"
       ],
       "edit": [
+        [
+          {
+            "name": "name",
+            "size": 6
+          },
+          {
+            "name": "description",
+            "size": 6
+          }
+        ],
         [
           {
             "name": "project",
             "size": 6
           },
           {
-            "name": "text",
+            "name": "time_entries",
             "size": 6
           }
         ],
         [
           {
-            "name": "recurrence_options",
-            "size": 12
-          }
-        ],
-        [
-          {
-            "name": "next_at",
-            "size": 6
+            "name": "time_spent",
+            "size": 4
           },
           {
-            "name": "enabled",
+            "name": "completed",
+            "size": 4
+          },
+          {
+            "name": "estimated_time",
             "size": 4
           }
         ],
         [
           {
-            "name": "user",
+            "name": "author",
             "size": 6
-          },
-          {
-            "name": "repeatable",
-            "size": 4
           }
         ]
       ]
     },
-    "uid": "api::project-reminder.project-reminder"
+    "uid": "api::task.task"
   },
   "type": "object",
   "environment": null,

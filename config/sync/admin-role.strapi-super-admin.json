@@ -192,7 +192,7 @@
       "locale": null
     },
     {
-      "documentId": "bn41w9rhjlvsbq7dpbruv2dd",
+      "documentId": "x1qfw12ce5rph0endkdmecav",
       "action": "plugin::content-manager.explorer.create",
       "actionParameters": {},
       "subject": "api::project-reminder.project-reminder",
@@ -203,7 +203,8 @@
           "recurrence_options",
           "next_at",
           "enabled",
-          "user"
+          "user",
+          "repeatable"
         ]
       },
       "conditions": [],
@@ -228,7 +229,7 @@
       "locale": null
     },
     {
-      "documentId": "s4f82rvn7s0ognm0ff2w450a",
+      "documentId": "lfeb3d5qetwpe2dq6xjl935e",
       "action": "plugin::content-manager.explorer.read",
       "actionParameters": {},
       "subject": "api::project-reminder.project-reminder",
@@ -239,14 +240,15 @@
           "recurrence_options",
           "next_at",
           "enabled",
-          "user"
+          "user",
+          "repeatable"
         ]
       },
       "conditions": [],
       "locale": null
     },
     {
-      "documentId": "ecjxwama490xaskdou0c3sf2",
+      "documentId": "tl9vozhuzzaxhfc7cen1kt6n",
       "action": "plugin::content-manager.explorer.update",
       "actionParameters": {},
       "subject": "api::project-reminder.project-reminder",
@@ -257,7 +259,8 @@
           "recurrence_options",
           "next_at",
           "enabled",
-          "user"
+          "user",
+          "repeatable"
         ]
       },
       "conditions": [],
@@ -402,7 +405,85 @@
       "locale": null
     },
     {
-      "documentId": "x8ykzyv6pn59cp8xn3jzxtr3",
+      "documentId": "ynnp8p99tx95o99xjggspowp",
+      "action": "plugin::content-manager.explorer.create",
+      "actionParameters": {},
+      "subject": "api::task.task",
+      "properties": {
+        "fields": [
+          "name",
+          "description",
+          "project",
+          "time_entries",
+          "time_spent",
+          "estimated_time",
+          "completed",
+          "author"
+        ]
+      },
+      "conditions": [],
+      "locale": null
+    },
+    {
+      "documentId": "szy44sbvqz72c1omv5aj2yow",
+      "action": "plugin::content-manager.explorer.delete",
+      "actionParameters": {},
+      "subject": "api::task.task",
+      "properties": {},
+      "conditions": [],
+      "locale": null
+    },
+    {
+      "documentId": "g5uraqvrctw9uqp0n6kn0i3f",
+      "action": "plugin::content-manager.explorer.publish",
+      "actionParameters": {},
+      "subject": "api::task.task",
+      "properties": {},
+      "conditions": [],
+      "locale": null
+    },
+    {
+      "documentId": "o5x496ir4lpmclr2mnpi1f96",
+      "action": "plugin::content-manager.explorer.read",
+      "actionParameters": {},
+      "subject": "api::task.task",
+      "properties": {
+        "fields": [
+          "name",
+          "description",
+          "project",
+          "time_entries",
+          "time_spent",
+          "estimated_time",
+          "completed",
+          "author"
+        ]
+      },
+      "conditions": [],
+      "locale": null
+    },
+    {
+      "documentId": "k13vnz4bud0l4e2t4ejr5vml",
+      "action": "plugin::content-manager.explorer.update",
+      "actionParameters": {},
+      "subject": "api::task.task",
+      "properties": {
+        "fields": [
+          "name",
+          "description",
+          "project",
+          "time_entries",
+          "time_spent",
+          "estimated_time",
+          "completed",
+          "author"
+        ]
+      },
+      "conditions": [],
+      "locale": null
+    },
+    {
+      "documentId": "yfku9r4z0j8ca0fnx9eaqc3j",
       "action": "plugin::content-manager.explorer.create",
       "actionParameters": {},
       "subject": "api::time-entry.time-entry",
@@ -413,7 +494,9 @@
           "start_time",
           "end_time",
           "user",
-          "duration"
+          "duration",
+          "long_track_notified_at",
+          "task"
         ]
       },
       "conditions": [],
@@ -438,7 +521,7 @@
       "locale": null
     },
     {
-      "documentId": "adnad828jjjhxwlsh70erpo3",
+      "documentId": "xryery3gj2nfglzxgxm3slaa",
       "action": "plugin::content-manager.explorer.read",
       "actionParameters": {},
       "subject": "api::time-entry.time-entry",
@@ -449,14 +532,16 @@
           "start_time",
           "end_time",
           "user",
-          "duration"
+          "duration",
+          "long_track_notified_at",
+          "task"
         ]
       },
       "conditions": [],
       "locale": null
     },
     {
-      "documentId": "qtd3xnz6sam0xnmlpuuq9vjz",
+      "documentId": "u5nfdaf7k1b1xo2beuiafjyc",
       "action": "plugin::content-manager.explorer.update",
       "actionParameters": {},
       "subject": "api::time-entry.time-entry",
@@ -467,7 +552,9 @@
           "start_time",
           "end_time",
           "user",
-          "duration"
+          "duration",
+          "long_track_notified_at",
+          "task"
         ]
       },
       "conditions": [],
