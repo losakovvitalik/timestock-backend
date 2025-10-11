@@ -30,12 +30,13 @@
       "mappedBy": "task"
     },
     "time_spent": {
-      "type": "integer"
+      "type": "integer",
+      "default": 0
     },
     "estimated_time": {
       "type": "integer"
     },
-    "completed": {
+    "is_completed": {
       "type": "boolean",
       "default": false
     },
@@ -43,6 +44,13 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user"
+    },
+    "due_date": {
+      "type": "date"
+    },
+    "is_archived": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

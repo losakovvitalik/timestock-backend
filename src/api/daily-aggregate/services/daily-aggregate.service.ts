@@ -120,6 +120,7 @@ export class DailyAggregateService {
     timezone: string;
     projectDocumentId: string;
   }): Promise<number> {
+    // TODO: в будущем стоит переделать на агрегацию времени с помощью SQL
     const dayRange = getDayRange(date, timezone);
 
     const timeEntries = await strapi.documents('api::time-entry.time-entry').findMany({

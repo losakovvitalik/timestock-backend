@@ -571,11 +571,13 @@ export interface ApiTaskTask extends Struct.CollectionTypeSchema {
   };
   attributes: {
     author: Schema.Attribute.Relation<'oneToOne', 'plugin::users-permissions.user'>;
-    completed: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> & Schema.Attribute.Private;
     description: Schema.Attribute.Text;
+    due_date: Schema.Attribute.Date;
     estimated_time: Schema.Attribute.Integer;
+    is_archived: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    is_completed: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::task.task'> &
       Schema.Attribute.Private;
@@ -583,7 +585,7 @@ export interface ApiTaskTask extends Struct.CollectionTypeSchema {
     project: Schema.Attribute.Relation<'oneToOne', 'api::project.project'>;
     publishedAt: Schema.Attribute.DateTime;
     time_entries: Schema.Attribute.Relation<'oneToMany', 'api::time-entry.time-entry'>;
-    time_spent: Schema.Attribute.Integer;
+    time_spent: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> & Schema.Attribute.Private;
   };

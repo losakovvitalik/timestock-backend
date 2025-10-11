@@ -9,6 +9,7 @@ import { getDatesInterval } from '../../../../shared/utils/time';
 import { DailyAggregateService } from '../../../daily-aggregate/services/daily-aggregate.service';
 import { ProjectService } from '../../../project/services/project.service';
 import { BeforeCreateEvent } from '../../../../shared/types/event';
+import { TaskService } from '../../../task/services/task.service';
 
 export default {
   async beforeCreate(
@@ -24,7 +25,7 @@ export default {
         (new Date(event.params.data.end_time).getTime() -
           new Date(event.params.data.start_time).getTime()) /
           1000
-      ); 
+      );
     }
   },
   async beforeUpdate(
@@ -65,22 +66,28 @@ export default {
       populate: {
         project: true,
         user: true,
+        task: true,
       },
     });
 
-    // если трек времени не привязан к проекту, то не надо и пересчитывать
-    if (!timeEntry.project) return;
+    // если трек времени привязан к задаче, то пересчитываем потраченное время
+    if (timeEntry) {
+      await TaskService.recalculateForTask(timeEntry.task.documentId);
+    }
+    
+    // если трек времени привязан к проекту, то пересчитываем потраченное время
+    if (timeEntry.project) {
+      const dates = new Set(
+        getDatesInterval(String(timeEntry.start_time), String(timeEntry.end_time))
+      );
 
-    const dates = new Set(
-      getDatesInterval(String(timeEntry.start_time), String(timeEntry.end_time))
-    );
-
-    for (const date of dates) {
-      await DailyAggregateService.recalculateForProject({
-        date,
-        projectDocumentId: timeEntry.project.documentId,
-        userId: timeEntry.user.id,
-      });
+      for (const date of dates) {
+        await DailyAggregateService.recalculateForProject({
+          date,
+          projectDocumentId: timeEntry.project.documentId,
+          userId: timeEntry.user.id,
+        });
+      }
     }
   },
   async beforeDelete(event: BeforeDeleteEvent) {
