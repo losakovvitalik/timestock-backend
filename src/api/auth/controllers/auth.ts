@@ -98,9 +98,42 @@ export default factories.createCoreController('plugin::users-permissions.user', 
       });
     }
 
-    const jwt = strapi.plugins['users-permissions'].services.jwt.issue({
-      id: user.id,
-    });
+    /**
+     * взял код для получения access и refresh токена из исходного кода strapi
+     * https://github.com/strapi/strapi/blob/35ca30daa48c41dc5d8fa1d8312557d733c580da/packages/core/core/src/services/session-manager.ts
+     * */
+    const extractDeviceId = (requestBody) => {
+      const { deviceId } = requestBody || {};
+
+      return typeof deviceId === 'string' && deviceId.length > 0 ? deviceId : undefined;
+    };
+
+    const sanitizeUser = (user, ctx) => {
+      const { auth } = ctx.state;
+      const userSchema = strapi.getModel('plugin::users-permissions.user');
+
+      return strapi.contentAPI.sanitize.output(user, userSchema, { auth });
+    };
+
+    const deviceId = extractDeviceId(ctx.request.body);
+
+    const refresh = await strapi
+      .sessionManager('users-permissions')
+      .generateRefreshToken(String(user.id), deviceId, { type: 'refresh' });
+
+    const access = await strapi
+      .sessionManager('users-permissions')
+      .generateAccessToken(refresh.token);
+    if ('error' in access) {
+      return sendError({
+        code: 'INVALID_CREDENTIALS',
+        statusCode: 403,
+        message: 'Unauthorized access',
+      });
+    }
+
+    const upSessions = strapi.config.get('plugin::users-permissions.sessions') as any;
+    const requestHttpOnly = ctx.request.header['x-strapi-refresh-cookie'] === 'httpOnly';
 
     await strapi.documents('plugin::users-permissions.user').update({
       documentId: user.documentId,
@@ -110,12 +143,27 @@ export default factories.createCoreController('plugin::users-permissions.user', 
       },
     });
 
-    return {
-      jwt,
-      user: {
-        id: user.id,
-        email: user.email,
-      },
-    };
+    if (upSessions?.httpOnly || requestHttpOnly) {
+      const cookieName = upSessions.cookie?.name || 'strapi_up_refresh';
+      const cookieOptions = {
+        httpOnly: true,
+        secure: Boolean(upSessions.cookie?.secure),
+        sameSite: upSessions.cookie?.sameSite ?? 'lax',
+        path: upSessions.cookie?.path ?? '/',
+        domain: upSessions.cookie?.domain,
+        overwrite: true,
+        maxAge: 90 * 24 * 60 * 60 * 1000,
+      };
+
+      ctx.cookies.set(cookieName, refresh.token, cookieOptions);
+
+      return ctx.send({ jwt: access.token, user: await sanitizeUser(user, ctx) });
+    }
+
+    return ctx.send({
+      jwt: access.token,
+      refreshToken: refresh.token,
+      user: await sanitizeUser(user, ctx),
+    });
   },
 }));
