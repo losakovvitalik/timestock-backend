@@ -39,7 +39,8 @@ git reset --hard "origin/$BRANCH"
 
 ### ——— 3. Deps & Build ———
 pnpm install --frozen-lockfile
-pnpm build          # Strapi v4
+pm2 stop "$APP_NAME"
+pnpm build
 
 ### ——— 4. PM2 ———
 if pm2 list | grep -q "$APP_NAME"; then
