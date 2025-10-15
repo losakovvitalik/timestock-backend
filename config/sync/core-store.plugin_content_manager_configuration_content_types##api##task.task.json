@@ -105,16 +105,16 @@
           "sortable": true
         }
       },
-      "completed": {
+      "is_completed": {
         "edit": {
-          "label": "completed",
+          "label": "is_completed",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "completed",
+          "label": "is_completed",
           "searchable": true,
           "sortable": true
         }
@@ -130,6 +130,34 @@
         },
         "list": {
           "label": "author",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "due_date": {
+        "edit": {
+          "label": "due_date",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "due_date",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "is_archived": {
+        "edit": {
+          "label": "is_archived",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "is_archived",
           "searchable": true,
           "sortable": true
         }
@@ -235,10 +263,6 @@
             "size": 4
           },
           {
-            "name": "completed",
-            "size": 4
-          },
-          {
             "name": "estimated_time",
             "size": 4
           }
@@ -247,6 +271,20 @@
           {
             "name": "author",
             "size": 6
+          },
+          {
+            "name": "is_completed",
+            "size": 4
+          }
+        ],
+        [
+          {
+            "name": "due_date",
+            "size": 4
+          },
+          {
+            "name": "is_archived",
+            "size": 4
           }
         ]
       ]

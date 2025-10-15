@@ -131,6 +131,11 @@
       "locale": null
     },
     {
+      "documentId": "e38gvuhywszwkmlbw4xqe9vq",
+      "action": "plugin::users-permissions.auth.logout",
+      "locale": null
+    },
+    {
       "documentId": "z3qvi4vjc6kahut2edw74czz",
       "action": "plugin::users-permissions.user.find",
       "locale": null

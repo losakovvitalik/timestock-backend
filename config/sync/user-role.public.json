@@ -36,6 +36,11 @@
       "locale": null
     },
     {
+      "documentId": "pipfp4q431rqd2u74vq97d1z",
+      "action": "plugin::users-permissions.auth.refresh",
+      "locale": null
+    },
+    {
       "documentId": "q9y95pctxw31jg4aeu54j33s",
       "action": "plugin::users-permissions.auth.register",
       "locale": null

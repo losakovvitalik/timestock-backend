@@ -405,7 +405,7 @@
       "locale": null
     },
     {
-      "documentId": "ynnp8p99tx95o99xjggspowp",
+      "documentId": "u9y8ahnhvh9u4p5fnnf5nznp",
       "action": "plugin::content-manager.explorer.create",
       "actionParameters": {},
       "subject": "api::task.task",
@@ -417,8 +417,10 @@
           "time_entries",
           "time_spent",
           "estimated_time",
-          "completed",
-          "author"
+          "is_completed",
+          "author",
+          "due_date",
+          "is_archived"
         ]
       },
       "conditions": [],
@@ -443,7 +445,7 @@
       "locale": null
     },
     {
-      "documentId": "o5x496ir4lpmclr2mnpi1f96",
+      "documentId": "iibcksb2d6wx7cy363lnu8h2",
       "action": "plugin::content-manager.explorer.read",
       "actionParameters": {},
       "subject": "api::task.task",
@@ -455,15 +457,17 @@
           "time_entries",
           "time_spent",
           "estimated_time",
-          "completed",
-          "author"
+          "is_completed",
+          "author",
+          "due_date",
+          "is_archived"
         ]
       },
       "conditions": [],
       "locale": null
     },
     {
-      "documentId": "k13vnz4bud0l4e2t4ejr5vml",
+      "documentId": "oqwhss0u414pek5lr896xifx",
       "action": "plugin::content-manager.explorer.update",
       "actionParameters": {},
       "subject": "api::task.task",
@@ -475,8 +479,10 @@
           "time_entries",
           "time_spent",
           "estimated_time",
-          "completed",
-          "author"
+          "is_completed",
+          "author",
+          "due_date",
+          "is_archived"
         ]
       },
       "conditions": [],
