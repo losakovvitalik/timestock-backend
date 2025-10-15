@@ -71,7 +71,7 @@ export default {
     });
 
     // если трек времени привязан к задаче, то пересчитываем потраченное время
-    if (timeEntry) {
+    if (timeEntry?.task) {
       await TaskService.recalculateForTask(timeEntry.task.documentId);
     }
     
