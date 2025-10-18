@@ -1,6 +1,5 @@
 import { Data } from '@strapi/strapi';
 import {
-  AfterDeleteEvent,
   AfterUpdateEvent,
   BeforeDeleteEvent,
   BeforeUpdateEvent,
@@ -48,7 +47,7 @@ export default {
 
       event.params.data.duration = Math.floor(
         (new Date(event.params.data.end_time).getTime() -
-          new Date(timeEntry.start_time).getTime()) /
+          new Date(event.params.data.start_time || timeEntry.start_time).getTime()) /
           1000
       );
     }
@@ -74,7 +73,7 @@ export default {
     if (timeEntry?.task) {
       await TaskService.recalculateForTask(timeEntry.task.documentId);
     }
-    
+
     // если трек времени привязан к проекту, то пересчитываем потраченное время
     if (timeEntry.project) {
       const dates = new Set(
