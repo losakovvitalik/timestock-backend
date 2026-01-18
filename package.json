@@ -15,32 +15,32 @@
     "upgrade:dry": "npx @strapi/upgrade latest --dry"
   },
   "dependencies": {
-    "@strapi/plugin-cloud": "^5.27.0",
-    "@strapi/plugin-users-permissions": "^5.27.0",
-    "@strapi/provider-email-nodemailer": "^5.27.0",
-    "@strapi/strapi": "^5.27.0",
-    "@strapi/utils": "^5.27.0",
+    "@strapi/plugin-cloud": "^5.33.3",
+    "@strapi/plugin-users-permissions": "^5.33.3",
+    "@strapi/provider-email-nodemailer": "^5.33.3",
+    "@strapi/strapi": "^5.33.3",
+    "@strapi/utils": "^5.33.3",
     "date-fns": "^4.1.0",
-    "jsonwebtoken": "^9.0.2",
-    "luxon": "^3.7.1",
+    "jsonwebtoken": "^9.0.3",
+    "luxon": "^3.7.2",
     "pg": "8.8.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.30.1",
+    "react-router-dom": "^6.30.3",
     "strapi-plugin-config-sync": "^3.1.2",
-    "styled-components": "^6.1.19",
+    "styled-components": "^6.3.8",
     "web-push": "^3.6.7",
-    "zod": "^3.25.74"
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.10",
-    "@types/luxon": "^3.6.2",
-    "@types/node": "^20.19.4",
-    "@types/react": "^18.3.23",
+    "@types/luxon": "^3.7.1",
+    "@types/node": "^20.19.30",
+    "@types/react": "^18.3.27",
     "@types/react-dom": "^18.3.7",
     "@types/web-push": "^3.6.4",
-    "prettier": "^3.6.2",
-    "typescript": "^5.8.3"
+    "prettier": "^3.8.0",
+    "typescript": "^5.9.3"
   },
   "engines": {
     "node": ">=18.0.0 <=22.x.x",
@@ -49,5 +49,5 @@
   "strapi": {
     "uuid": "10e7bc4c-246e-4c22-a06f-d2dcc409c323"
   },
-  "packageManager": "pnpm@10.12.1+sha512.f0dda8580f0ee9481c5c79a1d927b9164f2c478e90992ad268bbb2465a736984391d6333d2c327913578b2804af33474ca554ba29c04a8b13060a717675ae3ac"
+  "packageManager": "pnpm@10.28.0"
 }

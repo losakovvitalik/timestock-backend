@@ -85,6 +85,9 @@
     },
     "timezone": {
       "type": "string"
+    },
+    "first_timer_completed_at": {
+      "type": "datetime"
     }
   }
 }
