@@ -591,6 +591,32 @@ export interface ApiTaskTask extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiTelegramLinkTelegramLink extends Struct.CollectionTypeSchema {
+  collectionName: 'telegram_links';
+  info: {
+    displayName: 'Telegram link';
+    pluralName: 'telegram-links';
+    singularName: 'telegram-link';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    chat_id: Schema.Attribute.String & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> & Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::telegram-link.telegram-link'> &
+      Schema.Attribute.Private;
+    notifications_enabled: Schema.Attribute.Boolean;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> & Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<'oneToOne', 'plugin::users-permissions.user'>;
+    username: Schema.Attribute.String;
+  };
+}
+
 export interface ApiTimeEntryTimeEntry extends Struct.CollectionTypeSchema {
   collectionName: 'time_entries';
   info: {
@@ -1062,6 +1088,7 @@ declare module '@strapi/strapi' {
       'api::project.project': ApiProjectProject;
       'api::push-subscription.push-subscription': ApiPushSubscriptionPushSubscription;
       'api::task.task': ApiTaskTask;
+      'api::telegram-link.telegram-link': ApiTelegramLinkTelegramLink;
       'api::time-entry.time-entry': ApiTimeEntryTimeEntry;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

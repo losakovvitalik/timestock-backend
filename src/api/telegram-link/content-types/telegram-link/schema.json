@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "telegram_links",
+  "info": {
+    "singularName": "telegram-link",
+    "pluralName": "telegram-links",
+    "displayName": "Telegram link"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "chat_id": {
+      "type": "string",
+      "required": true
+    },
+    "username": {
+      "type": "string"
+    },
+    "notifications_enabled": {
+      "type": "boolean"
+    }
+  }
+}

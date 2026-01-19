@@ -10,7 +10,8 @@
     "daily-aggregate",
     "project",
     "app-feedback",
-    "task"
+    "task",
+    "telegram-link"
   ],
   "cSpell.words": [
     "luxon",
