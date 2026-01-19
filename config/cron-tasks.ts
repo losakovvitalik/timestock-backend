@@ -11,7 +11,7 @@ export default {
     task: async ({ strapi }: { strapi: Core.Strapi }) => {
       console.log(new Date().toISOString());
       try {
-        // Добавить в дальнейшем пагинацию
+        // TODO: Добавить в дальнейшем пагинацию
         const reminders = await strapi
           .documents('api::project-reminder.project-reminder')
           .findMany({
@@ -22,8 +22,6 @@ export default {
               enabled: true,
             },
           });
-
-        console.log(reminders);
 
         for (const reminder of reminders) {
           try {
