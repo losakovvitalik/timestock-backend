@@ -613,7 +613,32 @@ export interface ApiTelegramLinkTelegramLink extends Struct.CollectionTypeSchema
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> & Schema.Attribute.Private;
     user: Schema.Attribute.Relation<'oneToOne', 'plugin::users-permissions.user'>;
-    username: Schema.Attribute.String;
+  };
+}
+
+export interface ApiTelegramTokenTelegramToken extends Struct.CollectionTypeSchema {
+  collectionName: 'telegram_tokens';
+  info: {
+    displayName: 'Telegram token';
+    pluralName: 'telegram-tokens';
+    singularName: 'telegram-token';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> & Schema.Attribute.Private;
+    expires_at: Schema.Attribute.DateTime;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::telegram-token.telegram-token'> &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    token: Schema.Attribute.String & Schema.Attribute.Unique;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> & Schema.Attribute.Private;
+    used: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    user: Schema.Attribute.Relation<'oneToOne', 'plugin::users-permissions.user'>;
   };
 }
 
@@ -1089,6 +1114,7 @@ declare module '@strapi/strapi' {
       'api::push-subscription.push-subscription': ApiPushSubscriptionPushSubscription;
       'api::task.task': ApiTaskTask;
       'api::telegram-link.telegram-link': ApiTelegramLinkTelegramLink;
+      'api::telegram-token.telegram-token': ApiTelegramTokenTelegramToken;
       'api::time-entry.time-entry': ApiTimeEntryTimeEntry;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

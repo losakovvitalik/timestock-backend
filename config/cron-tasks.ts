@@ -107,4 +107,34 @@ export default {
       rule: '* * * * *',
     },
   },
+  cleanupExpiredTelegramTokens: {
+    task: async ({ strapi }: { strapi: Core.Strapi }) => {
+      try {
+        const expiredTokens = await strapi.documents('api::telegram-token.telegram-token').findMany({
+          filters: {
+            $or: [
+              { expires_at: { $lt: new Date() } },
+              { used: true },
+            ],
+          },
+        });
+
+        for (const token of expiredTokens) {
+          await strapi.documents('api::telegram-token.telegram-token').delete({
+            documentId: token.documentId,
+          });
+        }
+
+        if (expiredTokens.length > 0) {
+          strapi.log.info(`Cleaned up ${expiredTokens.length} expired/used telegram tokens`);
+        }
+      } catch (error) {
+        strapi.log.error(`Error in CRON task cleanupExpiredTelegramTokens: ${error}`);
+      }
+    },
+    options: {
+      // Каждый день в 3:00 ночи
+      rule: '0 3 * * *',
+    },
+  },
 };

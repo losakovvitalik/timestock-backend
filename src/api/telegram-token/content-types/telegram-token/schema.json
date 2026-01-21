@@ -1,10 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "telegram_links",
+  "collectionName": "telegram_tokens",
   "info": {
-    "singularName": "telegram-link",
-    "pluralName": "telegram-links",
-    "displayName": "Telegram link"
+    "singularName": "telegram-token",
+    "pluralName": "telegram-tokens",
+    "displayName": "Telegram token"
   },
   "options": {
     "draftAndPublish": false
@@ -16,12 +16,16 @@
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user"
     },
-    "chat_id": {
+    "token": {
       "type": "string",
-      "required": true
+      "unique": true
     },
-    "notifications_enabled": {
-      "type": "boolean"
+    "expires_at": {
+      "type": "datetime"
+    },
+    "used": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

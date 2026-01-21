@@ -34,5 +34,5 @@ export function sendNotFoundError(props: Pick<ErrorPayload, 'details' | 'message
 export function sendResponse<T>(data: T, status: number = 200) {
   const ctx = strapi.requestContext.get();
   ctx.status = status;
-  ctx.body = { data };
+  ctx.body = data;
 }
