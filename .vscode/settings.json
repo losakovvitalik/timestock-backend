@@ -11,7 +11,8 @@
     "project",
     "app-feedback",
     "task",
-    "telegram-link"
+    "telegram-link",
+    "telegram"
   ],
   "cSpell.words": [
     "luxon",

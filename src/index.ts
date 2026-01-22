@@ -1,6 +1,6 @@
 import webpush from 'web-push';
 import { env } from './shared/config/env';
-import { startTelegramBot, stopTelegramBot } from './shared/services/telegram-bot.service';
+import { startTelegramBot, stopTelegramBot } from './shared/services/telegram/telegram-bot.service';
 
 webpush.setVapidDetails(
   'mailto:losakovvitalik@gmail.com',

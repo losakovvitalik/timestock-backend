@@ -1,9 +1,6 @@
-import { Bot } from 'grammy';
-import { env } from '../config/env';
+import type { CommandContext, Context } from 'grammy';
 
-const bot = new Bot(env.TELEGRAM_BOT_TOKEN);
-
-bot.command('start', async (ctx) => {
+export async function startCommand(ctx: CommandContext<Context>) {
   const token = ctx.match;
 
   if (!token) {
@@ -78,18 +75,4 @@ bot.command('start', async (ctx) => {
     strapi.log.error('Telegram bot error:', error);
     await ctx.reply('Произошла ошибка при привязке аккаунта. Попробуйте позже.');
   }
-});
-
-export function startTelegramBot() {
-  bot.start({
-    onStart: (botInfo) => {
-      strapi.log.info(`Telegram bot @${botInfo.username} started`);
-    },
-  });
 }
-
-export function stopTelegramBot() {
-  bot.stop();
-}
-
-export { bot };
