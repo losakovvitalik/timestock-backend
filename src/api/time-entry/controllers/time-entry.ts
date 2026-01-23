@@ -5,8 +5,26 @@
 import { Data, factories } from '@strapi/strapi';
 import Context from '../../../shared/utils/context';
 import { ProjectService } from '../../project/services/project.service';
+import { TimeEntryService } from '../services/time-entry.service';
+import { sendError, sendNotFoundError, sendResponse } from '../../../shared/lib/response';
 
 export default factories.createCoreController('api::time-entry.time-entry', {
+  async stop(ctx) {
+    const context = new Context(ctx);
+    const documentId = context.getParams().id;
+
+    const result = await TimeEntryService.stopTimer(documentId);
+
+    if (result.success === false) {
+      if (result.reason === 'not_found') {
+        return sendNotFoundError({ message: 'Таймер не найден' });
+      }
+      return sendError({ code: 'ALREADY_STOPPED', message: 'Таймер уже остановлен' });
+    }
+
+    return sendResponse({ data: result.entry });
+  },
+
   async create(ctx) {
     const context = new Context(ctx);
     const body = context.getBody();

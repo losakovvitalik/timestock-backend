@@ -1,8 +1,10 @@
 import type { CallbackQueryContext, Context } from 'grammy';
 import { InlineKeyboard } from 'grammy';
-import { formatTimerMessage } from '../utils/get-active-timer';
+import { TimeEntryService } from '../../../../api/time-entry/services/time-entry.service';
+import { formatTimerMessage } from '../utils/format-timer';
 import { timerKeyboard } from '../keyboards/timer';
 import { CallbackAction, parseCallback, createCallback } from '../utils/callback-data';
+import { getUserByChatId } from '../utils/telegram-link';
 
 export async function handleSetProject(ctx: CallbackQueryContext<Context>) {
   const data = ctx.callbackQuery.data;
@@ -15,18 +17,14 @@ export async function handleSetProject(ctx: CallbackQueryContext<Context>) {
   }
 
   try {
-    // Получаем пользователя по chatId
-    const telegramLink = await strapi.documents('api::telegram-link.telegram-link').findFirst({
-      filters: { chat_id: chatId },
-      populate: ['user'],
-    });
+    const user = await getUserByChatId(chatId);
 
-    if (!telegramLink?.user) {
+    if (!user) {
       await ctx.answerCallbackQuery({ text: 'Аккаунт не привязан' });
       return;
     }
 
-    const userId = telegramLink.user.id;
+    const userId = user.id;
 
     // Получаем проекты пользователя
     const projects = await strapi.documents('api::project.project').findMany({
@@ -67,17 +65,16 @@ export async function handleSelectProject(ctx: CallbackQueryContext<Context>) {
   }
 
   try {
-    const entry = await strapi.documents('api::time-entry.time-entry').update({
-      documentId: entryDocumentId,
-      data: { project: projectDocumentId },
-      populate: ['project'],
-    });
+    const result = await TimeEntryService.setProject(entryDocumentId, projectDocumentId);
 
-    if (!entry || !entry.start_time) {
-      await ctx.answerCallbackQuery({ text: 'Таймер не найден' });
+    if (result.success === false) {
+      const message =
+        result.reason === 'not_found' ? 'Таймер не найден' : 'Таймер уже остановлен';
+      await ctx.answerCallbackQuery({ text: message });
       return;
     }
 
+    const { entry } = result;
     const keyboard = timerKeyboard(entryDocumentId, {
       hasDescription: !!entry.description,
       hasProject: true,

@@ -16,7 +16,7 @@ export function timerKeyboard(documentId: string, options: TimerKeyboardOptions 
     .text(descriptionText, createCallback(CallbackAction.SET_DESCRIPTION, documentId))
     .text(projectText, createCallback(CallbackAction.SET_PROJECT, documentId))
     .row()
-    .text('⏹ Остановить', createCallback(CallbackAction.STOP_TIMER, documentId));
+    .text('❌ Остановить', createCallback(CallbackAction.STOP_TIMER, documentId));
 }
 
 export function startTimerKeyboard() {

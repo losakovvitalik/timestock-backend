@@ -1,6 +1,8 @@
 import type { CallbackQueryContext, Context } from 'grammy';
-import { formatTimerMessage } from '../utils/get-active-timer';
+import { TimeEntryService } from '../../../../api/time-entry/services/time-entry.service';
+import { formatTimerMessage } from '../utils/format-timer';
 import { timerKeyboard } from '../keyboards/timer';
+import { getUserByChatId } from '../utils/telegram-link';
 
 export async function handleStartTimer(ctx: CallbackQueryContext<Context>) {
   const chatId = String(ctx.chat?.id);
@@ -11,43 +13,25 @@ export async function handleStartTimer(ctx: CallbackQueryContext<Context>) {
   }
 
   try {
-    const telegramLink = await strapi.documents('api::telegram-link.telegram-link').findFirst({
-      filters: { chat_id: chatId },
-      populate: ['user'],
-    });
+    const user = await getUserByChatId(chatId);
 
-    if (!telegramLink?.user) {
+    if (!user) {
       await ctx.answerCallbackQuery({ text: 'Аккаунт не привязан' });
       return;
     }
 
-    const userId = telegramLink.user.id;
+    const result = await TimeEntryService.startTimer(user.id);
 
-    // Проверяем, нет ли уже активного таймера
-    const activeEntry = await strapi.documents('api::time-entry.time-entry').findFirst({
-      filters: {
-        user: { id: userId },
-        end_time: { $null: true },
-      },
-    });
-
-    if (activeEntry) {
+    if (result.success === false) {
       await ctx.answerCallbackQuery({ text: 'Таймер уже запущен' });
       return;
     }
 
-    // Создаём новый таймер без проекта
-    const newEntry = await strapi.documents('api::time-entry.time-entry').create({
-      data: {
-        start_time: new Date().toISOString(),
-        user: userId,
-      },
-    });
-
-    const keyboard = timerKeyboard(newEntry.documentId);
+    const { entry } = result;
+    const keyboard = timerKeyboard(entry.documentId);
 
     await ctx.answerCallbackQuery({ text: 'Таймер запущен' });
-    await ctx.editMessageText(formatTimerMessage(newEntry), { reply_markup: keyboard });
+    await ctx.editMessageText(formatTimerMessage(entry), { reply_markup: keyboard });
   } catch (error) {
     strapi.log.error('Start timer error:', error);
     await ctx.answerCallbackQuery({ text: 'Ошибка при запуске таймера' });

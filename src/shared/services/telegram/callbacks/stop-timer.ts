@@ -1,6 +1,6 @@
 import type { CallbackQueryContext, Context } from 'grammy';
-import { ProjectService } from '../../../../api/project/services/project.service';
-import { formatDuration } from '../utils/get-active-timer';
+import { TimeEntryService } from '../../../../api/time-entry/services/time-entry.service';
+import { formatDuration } from '../utils/format-timer';
 import { CallbackAction, parseCallback } from '../utils/callback-data';
 
 export async function handleStopTimer(ctx: CallbackQueryContext<Context>) {
@@ -13,32 +13,17 @@ export async function handleStopTimer(ctx: CallbackQueryContext<Context>) {
   }
 
   try {
-    const entry = await strapi.documents('api::time-entry.time-entry').findOne({
-      documentId,
-      populate: ['project'],
-    });
+    const result = await TimeEntryService.stopTimer(documentId);
 
-    if (!entry || entry.end_time) {
-      await ctx.answerCallbackQuery({ text: 'Таймер уже остановлен' });
-      await ctx.editMessageText('Таймер уже остановлен.');
+    if (result.success === false) {
+      const message = result.reason === 'not_found' ? 'Таймер не найден' : 'Таймер уже остановлен';
+
+      await ctx.answerCallbackQuery({ text: message });
+      await ctx.editMessageText(`${message}.`);
       return;
     }
 
-    const endTime = new Date();
-    const startTime = new Date(entry.start_time);
-    const duration = Math.floor((endTime.getTime() - startTime.getTime()) / 1000);
-
-    await strapi.documents('api::time-entry.time-entry').update({
-      documentId,
-      data: {
-        end_time: endTime.toISOString(),
-        duration,
-      },
-    });
-
-    if (entry.project?.documentId) {
-      await ProjectService.recalculateTotalDuration(entry.project.documentId);
-    }
+    const { startTime, endTime, entry } = result;
 
     const durationText = formatDuration(startTime, endTime);
     const projectName = entry.project?.name ?? 'Без проекта';

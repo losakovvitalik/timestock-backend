@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@grammyjs/conversations':
+        specifier: ^2.1.1
+        version: 2.1.1(grammy@1.39.3)
       '@strapi/plugin-cloud':
         specifier: ^5.33.3
         version: 5.33.3(1bd2cec3510aff37bc6d28f312af827c)
@@ -776,6 +779,12 @@ packages:
     peerDependenciesMeta:
       typescript:
         optional: true
+
+  '@grammyjs/conversations@2.1.1':
+    resolution: {integrity: sha512-hoxqwSkaXDeU7mzXulpk3A4Cmd6UZO3HU4aPoITX5ekSHK7ZcUEmMl7RhKKkqw3z6zVbbAShQreJoVV5/dDSLA==}
+    engines: {node: ^12.20.0 || >=14.13.1}
+    peerDependencies:
+      grammy: ^1.20.1
 
   '@grammyjs/types@3.23.0':
     resolution: {integrity: sha512-D3jQ4UWERPsyR3op/YFudMMIPNTU47vy7L51uO9/73tMELmjO/+LX5N36/Y0CG5IQfIsz43MxiHI5rgsK0/k+g==}
@@ -7400,6 +7409,10 @@ snapshots:
       tslib: 2.8.1
     optionalDependencies:
       typescript: 5.9.3
+
+  '@grammyjs/conversations@2.1.1(grammy@1.39.3)':
+    dependencies:
+      grammy: 1.39.3
 
   '@grammyjs/types@3.23.0': {}
 

@@ -1,16 +1,12 @@
 import type { CommandContext, Context } from 'grammy';
 import { mainKeyboard } from '../keyboards/main';
+import { getTelegramLinkByChatId } from '../utils/telegram-link';
 
 export async function startCommand(ctx: CommandContext<Context>) {
   const token = ctx.match;
 
   if (!token) {
-    // Проверяем, привязан ли уже этот Telegram аккаунт
-    const existingLink = await strapi.documents('api::telegram-link.telegram-link').findFirst({
-      filters: {
-        chat_id: String(ctx.chat.id),
-      },
-    });
+    const existingLink = await getTelegramLinkByChatId(String(ctx.chat.id));
 
     if (existingLink) {
       await ctx.reply('Добро пожаловать в Timestock! 👋', {
@@ -45,11 +41,7 @@ export async function startCommand(ctx: CommandContext<Context>) {
 
     const userId = (tokenRecord.user as { id: number }).id;
 
-    const existingLink = await strapi.documents('api::telegram-link.telegram-link').findFirst({
-      filters: {
-        chat_id: String(ctx.chat.id),
-      },
-    });
+    const existingLink = await getTelegramLinkByChatId(String(ctx.chat.id));
 
     if (existingLink) {
       await ctx.reply('Этот Telegram аккаунт уже привязан к другому пользователю.');
