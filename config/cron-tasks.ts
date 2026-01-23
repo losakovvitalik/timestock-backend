@@ -9,7 +9,6 @@ export default {
    */
   sendNotifications: {
     task: async ({ strapi }: { strapi: Core.Strapi }) => {
-      console.log(new Date().toISOString());
       try {
         // TODO: Добавить в дальнейшем пагинацию
         const reminders = await strapi

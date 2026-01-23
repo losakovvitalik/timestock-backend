@@ -1,5 +1,5 @@
 export default [
-  'global::debug',
+  // 'global::debug',
   'strapi::logger',
   'strapi::errors',
   'strapi::security',
