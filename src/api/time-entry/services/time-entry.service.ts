@@ -6,6 +6,8 @@ import type {
   GetActiveTimerResult,
   SetProjectResult,
   SetDescriptionResult,
+  UpdateEntryResult,
+  UpdateEntryData,
 } from './time-entry.service.types';
 
 export class TimeEntryService {
@@ -115,15 +117,15 @@ export class TimeEntryService {
   }
 
   /**
-   * Привязка проекта к time-entry
+   * Универсальный метод обновления записи
    * - Проверяет существование записи
    * - Проверяет что таймер ещё активен
-   * - Обновляет проект
+   * - Обновляет переданные поля
    */
-  static async setProject(
+  private static async updateEntry(
     documentId: DocumentId,
-    projectId: DocumentId | null
-  ): Promise<SetProjectResult> {
+    data: UpdateEntryData
+  ): Promise<UpdateEntryResult> {
     const entry = await strapi.documents('api::time-entry.time-entry').findOne({
       documentId,
     });
@@ -138,7 +140,7 @@ export class TimeEntryService {
 
     const updatedEntry = await strapi.documents('api::time-entry.time-entry').update({
       documentId,
-      data: { project: projectId },
+      data,
       populate: ['project'],
     });
 
@@ -146,33 +148,22 @@ export class TimeEntryService {
   }
 
   /**
+   * Привязка проекта к time-entry
+   */
+  static async setProject(
+    documentId: DocumentId,
+    projectId: DocumentId | null
+  ): Promise<SetProjectResult> {
+    return this.updateEntry(documentId, { project: projectId });
+  }
+
+  /**
    * Обновление описания time-entry
-   * - Проверяет существование записи
-   * - Проверяет что таймер ещё активен
-   * - Обновляет описание
    */
   static async setDescription(
     documentId: DocumentId,
     description: string
   ): Promise<SetDescriptionResult> {
-    const entry = await strapi.documents('api::time-entry.time-entry').findOne({
-      documentId,
-    });
-
-    if (!entry) {
-      return { success: false, reason: 'not_found' };
-    }
-
-    if (entry.end_time) {
-      return { success: false, reason: 'already_stopped' };
-    }
-
-    const updatedEntry = await strapi.documents('api::time-entry.time-entry').update({
-      documentId,
-      data: { description },
-      populate: ['project'],
-    });
-
-    return { success: true, entry: updatedEntry };
+    return this.updateEntry(documentId, { description });
   }
 }

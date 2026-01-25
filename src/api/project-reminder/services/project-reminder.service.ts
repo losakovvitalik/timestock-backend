@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon';
-import { PushService } from '../../../shared/services/push.service';
+import { NotificationService } from '../../../shared/services/notification/notification.service';
+import { NotificationType } from '../../../shared/services/notification/types';
 
 export type RecurrenceOptions = {
   interval: 'DAILY';
@@ -7,7 +8,7 @@ export type RecurrenceOptions = {
 };
 
 export class ProjectReminderService {
-  static async sendPush(reminderDocumentId: string) {
+  static async send(reminderDocumentId: string) {
     const reminder = await strapi.documents('api::project-reminder.project-reminder').findOne({
       documentId: reminderDocumentId,
       populate: {
@@ -16,16 +17,22 @@ export class ProjectReminderService {
       },
     });
 
-    await PushService.sendToUser(reminder.user.documentId, {
+    await NotificationService.sendToUser(reminder.user.documentId, {
       title: `Проект "${reminder.project.name}"`,
       text: reminder.text,
+      type: NotificationType.PROJECT_REMINDER,
+      context: {
+        projectDocumentId: reminder.project.documentId,
+        reminderDocumentId: reminder.documentId,
+      },
     });
 
-    if (!reminder.repeatable) {
+    if (reminder.repeatable) {
       await strapi.documents('api::project-reminder.project-reminder').update({
         documentId: reminderDocumentId,
         data: {
           next_at: await this.calcNextTimeByReminder(reminderDocumentId),
+          snoozed_until: null,
         },
       });
     } else {
@@ -33,6 +40,7 @@ export class ProjectReminderService {
         documentId: reminderDocumentId,
         data: {
           enabled: false,
+          snoozed_until: null,
         },
       });
     }

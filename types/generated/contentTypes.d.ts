@@ -487,6 +487,7 @@ export interface ApiProjectReminderProjectReminder extends Struct.CollectionType
     publishedAt: Schema.Attribute.DateTime;
     recurrence_options: Schema.Attribute.JSON;
     repeatable: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    snoozed_until: Schema.Attribute.DateTime;
     text: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> & Schema.Attribute.Private;

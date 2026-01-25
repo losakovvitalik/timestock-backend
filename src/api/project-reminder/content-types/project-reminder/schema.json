@@ -48,6 +48,9 @@
     "repeatable": {
       "type": "boolean",
       "default": false
+    },
+    "snoozed_until": {
+      "type": "datetime"
     }
   }
 }

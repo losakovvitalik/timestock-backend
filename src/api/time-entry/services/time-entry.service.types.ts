@@ -47,3 +47,18 @@ export type SetDescriptionResult =
       success: false;
       reason: 'not_found' | 'already_stopped';
     };
+
+export type UpdateEntryResult =
+  | {
+      success: true;
+      entry: TimeEntry;
+    }
+  | {
+      success: false;
+      reason: 'not_found' | 'already_stopped';
+    };
+
+export type UpdateEntryData = Partial<{
+  project: string | null;
+  description: string;
+}>;
