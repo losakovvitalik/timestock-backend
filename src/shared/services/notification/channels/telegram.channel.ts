@@ -23,7 +23,7 @@ export class TelegramChannel {
         ...(keyboard && { reply_markup: keyboard }),
       });
     } catch (error) {
-      console.error(`Ошибка при отправке Telegram уведомления: ${error}`);
+      strapi.log.error(`Ошибка при отправке Telegram уведомления: ${error}`);
     }
   }
 

@@ -12,22 +12,6 @@ export default {
       try {
         // TODO: Добавить в дальнейшем пагинацию
         const now = new Date();
-        console.log('[sendNotifications] Current time:', now.toISOString());
-
-        // Сначала получим все enabled напоминания для отладки
-        const allReminders = await strapi
-          .documents('api::project-reminder.project-reminder')
-          .findMany({
-            filters: { enabled: true },
-          });
-        console.log(
-          '[sendNotifications] All enabled reminders:',
-          allReminders.map((r) => ({
-            id: r.documentId,
-            next_at: r.next_at,
-            snoozed_until: r.snoozed_until,
-          }))
-        );
 
         // Логика фильтра:
         // 1. next_at <= now И snoozed_until = null — обычное напоминание
@@ -49,10 +33,7 @@ export default {
             },
           });
 
-        console.log('[sendNotifications] Filtered reminders count:', reminders.length);
-
         for (const reminder of reminders) {
-          console.log('[sendNotifications] Processing reminder:', reminder.documentId);
           try {
             await ProjectReminderService.send(reminder.documentId);
           } catch (error) {

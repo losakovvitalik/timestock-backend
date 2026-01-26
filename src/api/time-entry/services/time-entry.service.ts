@@ -1,13 +1,14 @@
 import { DocumentId } from '../../../../types/strapi/types';
 import { ProjectService } from '../../project/services/project.service';
-import type {
-  StopTimerResult,
-  StartTimerResult,
-  GetActiveTimerResult,
-  SetProjectResult,
-  SetDescriptionResult,
-  UpdateEntryResult,
-  UpdateEntryData,
+import {
+  TimerError,
+  type StopTimerResult,
+  type StartTimerResult,
+  type GetActiveTimerResult,
+  type SetProjectResult,
+  type SetDescriptionResult,
+  type UpdateEntryResult,
+  type UpdateEntryData,
 } from './time-entry.service.types';
 
 export class TimeEntryService {
@@ -26,7 +27,7 @@ export class TimeEntryService {
     });
 
     if (activeEntry) {
-      return { success: false, reason: 'already_running', activeEntry };
+      return { success: false, reason: TimerError.ALREADY_RUNNING, activeEntry };
     }
 
     const entry = await strapi.documents('api::time-entry.time-entry').create({
@@ -44,23 +45,28 @@ export class TimeEntryService {
   /**
    * Остановка таймера по documentId
    * - Проверяет существование записи
+   * - Проверяет что запись принадлежит пользователю
    * - Проверяет что таймер ещё не остановлен
    * - Вычисляет duration
    * - Обновляет запись
    * - Пересчитывает время проекта если привязан
    */
-  static async stopTimer(documentId: DocumentId): Promise<StopTimerResult> {
+  static async stopTimer(documentId: DocumentId, userId: number): Promise<StopTimerResult> {
     const entry = await strapi.documents('api::time-entry.time-entry').findOne({
       documentId,
-      populate: ['project'],
+      populate: ['project', 'user'],
     });
 
     if (!entry) {
-      return { success: false, reason: 'not_found' };
+      return { success: false, reason: TimerError.NOT_FOUND };
+    }
+
+    if (entry.user?.id !== userId) {
+      return { success: false, reason: TimerError.FORBIDDEN };
     }
 
     if (entry.end_time) {
-      return { success: false, reason: 'already_stopped' };
+      return { success: false, reason: TimerError.ALREADY_STOPPED };
     }
 
     const endTime = new Date();
@@ -131,11 +137,11 @@ export class TimeEntryService {
     });
 
     if (!entry) {
-      return { success: false, reason: 'not_found' };
+      return { success: false, reason: TimerError.NOT_FOUND };
     }
 
     if (entry.end_time) {
-      return { success: false, reason: 'already_stopped' };
+      return { success: false, reason: TimerError.ALREADY_STOPPED };
     }
 
     const updatedEntry = await strapi.documents('api::time-entry.time-entry').update({

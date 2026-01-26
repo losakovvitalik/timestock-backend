@@ -22,7 +22,7 @@ export class PushService {
           })
         );
       } catch (error) {
-        console.error(`Ошибка при отправке push уведомления: ${error}`);
+        strapi.log.error(`Ошибка при отправке push уведомления: ${error}`);
 
         if (error instanceof WebPushError) {
           if (error.statusCode === 410) {

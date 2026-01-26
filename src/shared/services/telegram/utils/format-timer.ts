@@ -5,6 +5,7 @@ export function formatDuration(
   const start = new Date(startTime);
   const end = new Date(endTime);
   const diffMs = end.getTime() - start.getTime();
+  if (Number.isNaN(diffMs)) return '—';
 
   const hours = Math.floor(diffMs / (1000 * 60 * 60));
   const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
