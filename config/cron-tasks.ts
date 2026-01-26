@@ -1,7 +1,7 @@
 import { Core } from '@strapi/strapi';
 import { DateTime, Duration } from 'luxon';
 import { ProjectReminderService } from '../src/api/project-reminder/services/project-reminder.service';
-import { PushService } from '../src/shared/services/push.service';
+import { NotificationService } from '../src/shared/services/notification/notification.service';
 
 export default {
   /**
@@ -9,23 +9,33 @@ export default {
    */
   sendNotifications: {
     task: async ({ strapi }: { strapi: Core.Strapi }) => {
-      console.log(new Date().toISOString());
       try {
         // TODO: Добавить в дальнейшем пагинацию
+        const now = new Date();
+
+        // Логика фильтра:
+        // 1. next_at <= now И snoozed_until = null — обычное напоминание
+        // 2. snoozed_until <= now — отложенное напоминание, время истекло
         const reminders = await strapi
           .documents('api::project-reminder.project-reminder')
           .findMany({
             filters: {
-              next_at: {
-                $lte: new Date(),
-              },
               enabled: true,
+              $or: [
+                {
+                  next_at: { $lte: now },
+                  snoozed_until: { $null: true },
+                },
+                {
+                  snoozed_until: { $lte: now },
+                },
+              ],
             },
           });
 
         for (const reminder of reminders) {
           try {
-            await ProjectReminderService.sendPush(reminder.documentId);
+            await ProjectReminderService.send(reminder.documentId);
           } catch (error) {
             strapi.log.error(
               `Error in cron task "sendNotifications", reminderId: ${reminder.documentId}, error: ${error}`
@@ -87,7 +97,7 @@ export default {
             msg += `${entry.description}`;
           }
 
-          await PushService.sendToUser(entry.user.documentId, {
+          await NotificationService.sendToUser(entry.user.documentId, {
             title: 'Ваш таймер все ещё запущен!',
             ...(msg ? { text: msg } : {}),
           });
@@ -110,14 +120,13 @@ export default {
   cleanupExpiredTelegramTokens: {
     task: async ({ strapi }: { strapi: Core.Strapi }) => {
       try {
-        const expiredTokens = await strapi.documents('api::telegram-token.telegram-token').findMany({
-          filters: {
-            $or: [
-              { expires_at: { $lt: new Date() } },
-              { used: true },
-            ],
-          },
-        });
+        const expiredTokens = await strapi
+          .documents('api::telegram-token.telegram-token')
+          .findMany({
+            filters: {
+              $or: [{ expires_at: { $lt: new Date() } }, { used: true }],
+            },
+          });
 
         for (const token of expiredTokens) {
           await strapi.documents('api::telegram-token.telegram-token').delete({

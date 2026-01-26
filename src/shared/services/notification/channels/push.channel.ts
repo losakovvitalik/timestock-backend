@@ -1,7 +1,8 @@
 import webpush, { PushSubscription, WebPushError } from 'web-push';
+import type { NotificationMessage } from '../types';
 
-export class PushService {
-  static async sendToUser(userDocumentId: string, msg: { title: string; text?: string }) {
+export class PushChannel {
+  static async send(userDocumentId: string, msg: NotificationMessage) {
     const subs = await strapi.documents('api::push-subscription.push-subscription').findMany({
       filters: {
         user: {

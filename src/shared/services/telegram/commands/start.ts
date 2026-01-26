@@ -1,10 +1,20 @@
 import type { CommandContext, Context } from 'grammy';
+import { mainKeyboard } from '../keyboards/main';
+import { getTelegramLinkByChatId } from '../utils/telegram-link';
 
 export async function startCommand(ctx: CommandContext<Context>) {
   const token = ctx.match;
 
   if (!token) {
-    await ctx.reply('Для привязки аккаунта перейдите по ссылке из приложения Timestock.');
+    const existingLink = await getTelegramLinkByChatId(String(ctx.chat.id));
+
+    if (existingLink) {
+      await ctx.reply('Добро пожаловать в Timestock! 👋', {
+        reply_markup: mainKeyboard,
+      });
+    } else {
+      await ctx.reply('Для привязки аккаунта перейдите по ссылке из приложения Timestock.');
+    }
     return;
   }
 
@@ -31,11 +41,7 @@ export async function startCommand(ctx: CommandContext<Context>) {
 
     const userId = (tokenRecord.user as { id: number }).id;
 
-    const existingLink = await strapi.documents('api::telegram-link.telegram-link').findFirst({
-      filters: {
-        chat_id: String(ctx.chat.id),
-      },
-    });
+    const existingLink = await getTelegramLinkByChatId(String(ctx.chat.id));
 
     if (existingLink) {
       await ctx.reply('Этот Telegram аккаунт уже привязан к другому пользователю.');
@@ -70,7 +76,9 @@ export async function startCommand(ctx: CommandContext<Context>) {
       data: { used: true },
     });
 
-    await ctx.reply('Аккаунт успешно привязан! Теперь вы будете получать уведомления в Telegram.');
+    await ctx.reply('Аккаунт успешно привязан! Теперь вы будете получать уведомления в Telegram.', {
+      reply_markup: mainKeyboard,
+    });
   } catch (error) {
     strapi.log.error('Telegram bot error:', error);
     await ctx.reply('Произошла ошибка при привязке аккаунта. Попробуйте позже.');

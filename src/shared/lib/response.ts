@@ -26,7 +26,15 @@ export function sendValidationError(props: Pick<ErrorPayload, 'details' | 'messa
 export function sendNotFoundError(props: Pick<ErrorPayload, 'details' | 'message'>) {
   return sendError({
     code: 'NOT_FOUND',
-    statusCode: 409,
+    statusCode: 404,
+    ...props,
+  });
+}
+
+export function sendForbiddenError(props: Pick<ErrorPayload, 'details' | 'message'>) {
+  return sendError({
+    code: 'FORBIDDEN',
+    statusCode: 403,
     ...props,
   });
 }
