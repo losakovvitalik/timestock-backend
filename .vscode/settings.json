@@ -12,7 +12,8 @@
     "app-feedback",
     "task",
     "telegram-link",
-    "telegram"
+    "telegram",
+    "env"
   ],
   "cSpell.words": [
     "luxon",

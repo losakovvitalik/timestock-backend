@@ -39,7 +39,7 @@ git reset --hard "origin/$BRANCH"
 
 ### ——— 3. Deps & Build ———
 pnpm install --frozen-lockfile
-pm2 stop "$APP_NAME"
+pm2 stop "$APP_NAME" || true
 pnpm build
 
 ### ——— 4. PM2 ———
