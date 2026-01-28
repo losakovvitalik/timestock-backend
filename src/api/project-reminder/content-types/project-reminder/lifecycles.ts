@@ -7,7 +7,7 @@ import { ProjectReminderService, RecurrenceOptions } from '../../services/projec
 export default {
   async afterCreate(event: AfterCreateEvent) {
     const documentId = event.result.documentId;
-    const nextAt = await ProjectReminderService.calcNextTimeByReminder(documentId);
+    const nextAt = await ProjectReminderService.calcNextTimeByReminder(strapi, documentId);
     await strapi.documents('api::project-reminder.project-reminder').update({
       documentId,
       data: {

@@ -1,3 +1,4 @@
+import { Core } from '@strapi/strapi';
 import { DateTime } from 'luxon';
 import { NotificationService } from '../../../shared/services/notification/notification.service';
 import { NotificationType } from '../../../shared/services/notification/types';
@@ -8,7 +9,7 @@ export type RecurrenceOptions = {
 };
 
 export class ProjectReminderService {
-  static async send(reminderDocumentId: string) {
+  static async send(strapi: Core.Strapi, reminderDocumentId: string) {
     const reminder = await strapi.documents('api::project-reminder.project-reminder').findOne({
       documentId: reminderDocumentId,
       populate: {
@@ -17,7 +18,7 @@ export class ProjectReminderService {
       },
     });
 
-    await NotificationService.sendToUser(reminder.user.documentId, {
+    await NotificationService.sendToUser(strapi, reminder.user.documentId, {
       title: `Проект "${reminder.project.name}"`,
       text: reminder.text,
       type: NotificationType.PROJECT_REMINDER,
@@ -31,7 +32,7 @@ export class ProjectReminderService {
       await strapi.documents('api::project-reminder.project-reminder').update({
         documentId: reminderDocumentId,
         data: {
-          next_at: await this.calcNextTimeByReminder(reminderDocumentId),
+          next_at: await this.calcNextTimeByReminder(strapi, reminderDocumentId),
           snoozed_until: null,
         },
       });
@@ -46,7 +47,7 @@ export class ProjectReminderService {
     }
   }
 
-  static async calcNextTimeByReminder(reminderDocumentId: string) {
+  static async calcNextTimeByReminder(strapi: Core.Strapi, reminderDocumentId: string) {
     const reminder = await strapi.documents('api::project-reminder.project-reminder').findOne({
       documentId: reminderDocumentId,
       populate: {
