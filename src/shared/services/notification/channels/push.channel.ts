@@ -1,8 +1,9 @@
+import { Core } from '@strapi/strapi';
 import webpush, { PushSubscription, WebPushError } from 'web-push';
 import type { NotificationMessage } from '../types';
 
 export class PushChannel {
-  static async send(userDocumentId: string, msg: NotificationMessage) {
+  static async send(strapi: Core.Strapi, userDocumentId: string, msg: NotificationMessage) {
     const subs = await strapi.documents('api::push-subscription.push-subscription').findMany({
       filters: {
         user: {

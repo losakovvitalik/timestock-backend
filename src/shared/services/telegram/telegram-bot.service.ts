@@ -31,13 +31,13 @@ bot.callbackQuery(callbackRegex(CallbackAction.CANCEL_PROJECT), handleCancelProj
 bot.callbackQuery(callbackRegex(CallbackAction.SNOOZE_REMINDER), handleSnoozeReminder);
 
 bot.catch((err) => {
-  strapi.log.error('Telegram bot error:', err);
+  console.error('Telegram bot error:', err);
 });
 
 export function startTelegramBot() {
   bot.start({
     onStart: (botInfo) => {
-      strapi.log.info(`Telegram bot @${botInfo.username} started`);
+      console.log(`Telegram bot @${botInfo.username} started`);
     },
   });
 }

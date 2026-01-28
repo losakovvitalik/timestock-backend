@@ -35,7 +35,7 @@ export default {
 
         for (const reminder of reminders) {
           try {
-            await ProjectReminderService.send(reminder.documentId);
+            await ProjectReminderService.send(strapi, reminder.documentId);
           } catch (error) {
             strapi.log.error(
               `Error in cron task "sendNotifications", reminderId: ${reminder.documentId}, error: ${error}`
@@ -97,7 +97,7 @@ export default {
             msg += `${entry.description}`;
           }
 
-          await NotificationService.sendToUser(entry.user.documentId, {
+          await NotificationService.sendToUser(strapi, entry.user.documentId, {
             title: 'Ваш таймер все ещё запущен!',
             ...(msg ? { text: msg } : {}),
           });
