@@ -204,6 +204,20 @@
           "sortable": true
         }
       },
+      "first_timer_completed_at": {
+        "edit": {
+          "label": "first_timer_completed_at",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "first_timer_completed_at",
+          "searchable": true,
+          "sortable": true
+        }
+      },
       "createdAt": {
         "edit": {
           "label": "createdAt",
@@ -326,6 +340,12 @@
           },
           {
             "name": "timezone",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "first_timer_completed_at",
             "size": 6
           }
         ]

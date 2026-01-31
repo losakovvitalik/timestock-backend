@@ -192,7 +192,7 @@
       "locale": null
     },
     {
-      "documentId": "x1qfw12ce5rph0endkdmecav",
+      "documentId": "bn0dh7f7x9gtyk9hwvkmf3rn",
       "action": "plugin::content-manager.explorer.create",
       "actionParameters": {},
       "subject": "api::project-reminder.project-reminder",
@@ -204,7 +204,8 @@
           "next_at",
           "enabled",
           "user",
-          "repeatable"
+          "repeatable",
+          "snoozed_until"
         ]
       },
       "conditions": [],
@@ -229,7 +230,7 @@
       "locale": null
     },
     {
-      "documentId": "lfeb3d5qetwpe2dq6xjl935e",
+      "documentId": "crbj3ikpjncurir7naf79vj5",
       "action": "plugin::content-manager.explorer.read",
       "actionParameters": {},
       "subject": "api::project-reminder.project-reminder",
@@ -241,14 +242,15 @@
           "next_at",
           "enabled",
           "user",
-          "repeatable"
+          "repeatable",
+          "snoozed_until"
         ]
       },
       "conditions": [],
       "locale": null
     },
     {
-      "documentId": "tl9vozhuzzaxhfc7cen1kt6n",
+      "documentId": "y4llqx21ipct8qzyqq7q1us8",
       "action": "plugin::content-manager.explorer.update",
       "actionParameters": {},
       "subject": "api::project-reminder.project-reminder",
@@ -260,7 +262,8 @@
           "next_at",
           "enabled",
           "user",
-          "repeatable"
+          "repeatable",
+          "snoozed_until"
         ]
       },
       "conditions": [],
@@ -483,6 +486,135 @@
           "author",
           "due_date",
           "is_archived"
+        ]
+      },
+      "conditions": [],
+      "locale": null
+    },
+    {
+      "documentId": "t1syb4sybh8chx5nsoc5puvk",
+      "action": "plugin::content-manager.explorer.create",
+      "actionParameters": {},
+      "subject": "api::telegram-link.telegram-link",
+      "properties": {
+        "fields": [
+          "user",
+          "chat_id",
+          "notifications_enabled"
+        ]
+      },
+      "conditions": [],
+      "locale": null
+    },
+    {
+      "documentId": "du910i0hc8hxdiidxjax1hxu",
+      "action": "plugin::content-manager.explorer.delete",
+      "actionParameters": {},
+      "subject": "api::telegram-link.telegram-link",
+      "properties": {},
+      "conditions": [],
+      "locale": null
+    },
+    {
+      "documentId": "d5kvzgmzbl8h9x9xwylau9wo",
+      "action": "plugin::content-manager.explorer.publish",
+      "actionParameters": {},
+      "subject": "api::telegram-link.telegram-link",
+      "properties": {},
+      "conditions": [],
+      "locale": null
+    },
+    {
+      "documentId": "sqpp6x8lz13dmd76wuxieszv",
+      "action": "plugin::content-manager.explorer.read",
+      "actionParameters": {},
+      "subject": "api::telegram-link.telegram-link",
+      "properties": {
+        "fields": [
+          "user",
+          "chat_id",
+          "notifications_enabled"
+        ]
+      },
+      "conditions": [],
+      "locale": null
+    },
+    {
+      "documentId": "c3aq1tb0gr0ol3gi4jea8mfh",
+      "action": "plugin::content-manager.explorer.update",
+      "actionParameters": {},
+      "subject": "api::telegram-link.telegram-link",
+      "properties": {
+        "fields": [
+          "user",
+          "chat_id",
+          "notifications_enabled"
+        ]
+      },
+      "conditions": [],
+      "locale": null
+    },
+    {
+      "documentId": "j0sco9q8uzgc7yoxoe14apvl",
+      "action": "plugin::content-manager.explorer.create",
+      "actionParameters": {},
+      "subject": "api::telegram-token.telegram-token",
+      "properties": {
+        "fields": [
+          "user",
+          "token",
+          "expires_at",
+          "used"
+        ]
+      },
+      "conditions": [],
+      "locale": null
+    },
+    {
+      "documentId": "d87ppin6glskcxthsqh14bmo",
+      "action": "plugin::content-manager.explorer.delete",
+      "actionParameters": {},
+      "subject": "api::telegram-token.telegram-token",
+      "properties": {},
+      "conditions": [],
+      "locale": null
+    },
+    {
+      "documentId": "hawum85ltcnyeh7d3q678nva",
+      "action": "plugin::content-manager.explorer.publish",
+      "actionParameters": {},
+      "subject": "api::telegram-token.telegram-token",
+      "properties": {},
+      "conditions": [],
+      "locale": null
+    },
+    {
+      "documentId": "annvech0fclksdqwa9tfbu72",
+      "action": "plugin::content-manager.explorer.read",
+      "actionParameters": {},
+      "subject": "api::telegram-token.telegram-token",
+      "properties": {
+        "fields": [
+          "user",
+          "token",
+          "expires_at",
+          "used"
+        ]
+      },
+      "conditions": [],
+      "locale": null
+    },
+    {
+      "documentId": "wzbs7qees89pizcrsz7373tj",
+      "action": "plugin::content-manager.explorer.update",
+      "actionParameters": {},
+      "subject": "api::telegram-token.telegram-token",
+      "properties": {
+        "fields": [
+          "user",
+          "token",
+          "expires_at",
+          "used"
         ]
       },
       "conditions": [],
@@ -846,7 +978,7 @@
       "locale": null
     },
     {
-      "documentId": "mtj5mah05i0t9vg4s8zwann3",
+      "documentId": "h41gzisj4wkgbdwxa8l3wjzh",
       "action": "plugin::content-manager.explorer.create",
       "actionParameters": {},
       "subject": "plugin::users-permissions.user",
@@ -864,7 +996,8 @@
           "created_projects",
           "projects",
           "otp_code",
-          "timezone"
+          "timezone",
+          "first_timer_completed_at"
         ]
       },
       "conditions": [],
@@ -889,7 +1022,7 @@
       "locale": null
     },
     {
-      "documentId": "gop49t1y4b1axrnazv7nveak",
+      "documentId": "mmw35y66f3m9t2x2xeoresgc",
       "action": "plugin::content-manager.explorer.read",
       "actionParameters": {},
       "subject": "plugin::users-permissions.user",
@@ -907,14 +1040,15 @@
           "created_projects",
           "projects",
           "otp_code",
-          "timezone"
+          "timezone",
+          "first_timer_completed_at"
         ]
       },
       "conditions": [],
       "locale": null
     },
     {
-      "documentId": "hpi8n7e95j3o1gs6bgn1419w",
+      "documentId": "is5w3ryyy27wrke4p24yoi2e",
       "action": "plugin::content-manager.explorer.update",
       "actionParameters": {},
       "subject": "plugin::users-permissions.user",
@@ -932,7 +1066,8 @@
           "created_projects",
           "projects",
           "otp_code",
-          "timezone"
+          "timezone",
+          "first_timer_completed_at"
         ]
       },
       "conditions": [],

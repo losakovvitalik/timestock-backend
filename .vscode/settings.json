@@ -13,7 +13,8 @@
     "task",
     "telegram-link",
     "telegram",
-    "env"
+    "env",
+    "sync"
   ],
   "cSpell.words": [
     "luxon",

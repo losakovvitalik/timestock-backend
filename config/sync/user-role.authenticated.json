@@ -101,6 +101,26 @@
       "locale": null
     },
     {
+      "documentId": "sivs2iuapczvvov0taisfxa7",
+      "action": "api::telegram-link.telegram-link.generateLink",
+      "locale": null
+    },
+    {
+      "documentId": "a6bdj6glc616hrrlzov8h60w",
+      "action": "api::telegram-link.telegram-link.getStatus",
+      "locale": null
+    },
+    {
+      "documentId": "iz103ebriu2e8ty2bmeyzr4o",
+      "action": "api::telegram-link.telegram-link.toggleNotifications",
+      "locale": null
+    },
+    {
+      "documentId": "puhyr92523n7568fagl56wlz",
+      "action": "api::telegram-link.telegram-link.unlink",
+      "locale": null
+    },
+    {
       "documentId": "o2oh8rd1thnqu5t8nrwernju",
       "action": "api::time-entry.time-entry.create",
       "locale": null
