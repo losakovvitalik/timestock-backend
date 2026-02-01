@@ -19,7 +19,7 @@ export class ProjectReminderService {
     });
 
     await NotificationService.sendToUser(strapi, reminder.user.documentId, {
-      title: `Проект "${reminder.project.name}"`,
+      title: `Проект: "${reminder.project.name}"`,
       text: reminder.text,
       type: NotificationType.PROJECT_REMINDER,
       context: {

@@ -5,6 +5,37 @@ import { CallbackAction, createCallback } from '../../telegram/utils/callback-da
 import { NotificationType, type NotificationMessage } from '../types';
 
 export class TelegramChannel {
+  static async sendNotification(strapi: Core.Strapi, userDocumentId: string, msg: NotificationMessage) {
+    const link = await strapi.documents('api::telegram-link.telegram-link').findFirst({
+      filters: {
+        user: { documentId: userDocumentId },
+        notifications_enabled: true,
+      },
+    });
+
+    if (!link) return;
+
+    try {
+      const text = this.formatNotificationMessage(msg);
+      const keyboard = this.getKeyboard(msg);
+
+      await bot.api.sendMessage(link.chat_id, text, {
+        parse_mode: 'Markdown',
+        ...(keyboard && { reply_markup: keyboard }),
+      });
+    } catch (error) {
+      strapi.log.error(`Ошибка при отправке Telegram уведомления: ${error}`);
+    }
+  }
+
+  private static formatNotificationMessage(msg: NotificationMessage): string {
+    const header = '*Уведомление 🔔*';
+    const title = this.escapeMarkdown(msg.title);
+    const text = msg.text ? `\n${this.escapeMarkdown(msg.text)}` : '';
+
+    return `${header}\n${title}${text}`;
+  }
+
   static async send(strapi: Core.Strapi, userDocumentId: string, msg: NotificationMessage) {
     const link = await strapi.documents('api::telegram-link.telegram-link').findFirst({
       filters: {
@@ -48,7 +79,7 @@ export class TelegramChannel {
 
   private static formatMessage(msg: NotificationMessage): string {
     if (msg.text) {
-      return `*${this.escapeMarkdown(msg.title)}*\n${this.escapeMarkdown(msg.text)}`;
+      return `*${this.escapeMarkdown(msg.title)}* \n${this.escapeMarkdown(msg.text)}`;
     }
     return `*${this.escapeMarkdown(msg.title)}*`;
   }
