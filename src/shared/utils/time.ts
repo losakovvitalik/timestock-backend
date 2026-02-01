@@ -39,3 +39,10 @@ export function getDatesInterval(startISO: string, endISO: string): string[] {
 
   return dates;
 }
+
+/**
+ * Возвращает строку в формате YYYY-MM-DD из ISO datetime строки
+ */
+export function getDateFromISO(isoDateTime: string): string {
+  return DateTime.fromISO(isoDateTime).toISODate();
+}

@@ -44,11 +44,18 @@ export class DailyAggregateService {
       throw new Error('Этого пользователя нет в проекте');
     }
 
-    const totalSeconds = await this.calculateDuration({
-      date,
-      projectDocumentId,
-      timezone: user.timezone,
-    });
+    const [totalSeconds, tracksCount] = await Promise.all([
+      this.calculateDuration({
+        date,
+        projectDocumentId,
+        timezone: user.timezone,
+      }),
+      this.calculateTracksCount({
+        date,
+        projectDocumentId,
+        timezone: user.timezone,
+      }),
+    ]);
 
     return await strapi.documents('api::daily-aggregate.daily-aggregate').create({
       data: {
@@ -56,6 +63,7 @@ export class DailyAggregateService {
         project: projectDocumentId,
         user: userId,
         duration: Math.floor(totalSeconds) || 0,
+        tracks_count: tracksCount,
       },
     });
   }
@@ -97,16 +105,24 @@ export class DailyAggregateService {
       throw new Error('Этого пользователя нет в проекте');
     }
 
-    const totalSeconds = await this.calculateDuration({
-      date,
-      projectDocumentId,
-      timezone: user.timezone,
-    });
+    const [totalSeconds, tracksCount] = await Promise.all([
+      this.calculateDuration({
+        date,
+        projectDocumentId,
+        timezone: user.timezone,
+      }),
+      this.calculateTracksCount({
+        date,
+        projectDocumentId,
+        timezone: user.timezone,
+      }),
+    ]);
 
     return await strapi.documents('api::daily-aggregate.daily-aggregate').update({
       documentId: dailyAggregate.documentId,
       data: {
         duration: totalSeconds,
+        tracks_count: tracksCount,
       },
     });
   }
@@ -149,5 +165,35 @@ export class DailyAggregateService {
     }, 0);
 
     return Math.floor(totalSeconds);
+  }
+
+  /**
+   * Подсчитывает количество треков, созданных в указанный день.
+   * Трек считается созданным в день, если его start_time попадает в этот день.
+   */
+  private static async calculateTracksCount({
+    date,
+    timezone,
+    projectDocumentId,
+  }: {
+    date: string;
+    timezone: string;
+    projectDocumentId: string;
+  }): Promise<number> {
+    const dayRange = getDayRange(date, timezone);
+
+    const timeEntries = await strapi.documents('api::time-entry.time-entry').findMany({
+      filters: {
+        project: {
+          documentId: projectDocumentId,
+        },
+        start_time: {
+          $gte: dayRange.from.toJSDate(),
+          $lte: dayRange.to.toJSDate(),
+        },
+      },
+    });
+
+    return timeEntries.length;
   }
 }

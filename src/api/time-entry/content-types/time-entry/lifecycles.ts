@@ -1,10 +1,11 @@
 import { Data } from '@strapi/strapi';
 import {
+  AfterCreateEvent,
   AfterUpdateEvent,
   BeforeDeleteEvent,
   BeforeUpdateEvent,
 } from '../../../../../types/strapi/lifecycles';
-import { getDatesInterval } from '../../../../shared/utils/time';
+import { getDateFromISO, getDatesInterval } from '../../../../shared/utils/time';
 import { DailyAggregateService } from '../../../daily-aggregate/services/daily-aggregate.service';
 import { ProjectService } from '../../../project/services/project.service';
 import { BeforeCreateEvent } from '../../../../shared/types/event';
@@ -25,6 +26,28 @@ export default {
           new Date(event.params.data.start_time).getTime()) /
           1000
       );
+    }
+  },
+  /**
+   * При создании трека времени пересчитываем tracks_count для дня start_time
+   */
+  async afterCreate(event: AfterCreateEvent<Data.ContentType<'api::time-entry.time-entry'>>) {
+    const timeEntry = await strapi.documents('api::time-entry.time-entry').findOne({
+      documentId: event.result.documentId,
+      populate: {
+        project: true,
+        user: true,
+      },
+    });
+
+    if (timeEntry?.project && timeEntry?.start_time) {
+      const startDate = getDateFromISO(String(timeEntry.start_time));
+
+      await DailyAggregateService.recalculateForProject({
+        date: startDate,
+        projectDocumentId: timeEntry.project.documentId,
+        userId: timeEntry.user.id,
+      });
     }
   },
   async beforeUpdate(
@@ -105,9 +128,11 @@ export default {
     });
 
     if (timeEntry.project) {
-      const dates = new Set(
-        getDatesInterval(String(timeEntry.start_time), String(timeEntry.end_time))
-      );
+      // Если трек активный (без end_time), пересчитываем только день start_time
+      // Иначе пересчитываем все дни в интервале
+      const dates = timeEntry.end_time
+        ? new Set(getDatesInterval(String(timeEntry.start_time), String(timeEntry.end_time)))
+        : new Set([getDateFromISO(String(timeEntry.start_time))]);
 
       for (const date of dates) {
         await DailyAggregateService.recalculateForProject({
@@ -115,7 +140,10 @@ export default {
           projectDocumentId: timeEntry.project.documentId,
           userId: timeEntry.user.id,
         });
+      }
 
+      // Уменьшаем общую длительность проекта только если трек был завершён
+      if (timeEntry.duration) {
         await ProjectService.recalculateTotalDuration(
           timeEntry.project.documentId,
           -timeEntry.duration
