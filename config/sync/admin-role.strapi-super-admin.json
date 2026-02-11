@@ -126,7 +126,7 @@
       "locale": null
     },
     {
-      "documentId": "mbhypyscw85sd331m1grtnd9",
+      "documentId": "c6okd5ueog3majihrhxtgk3s",
       "action": "plugin::content-manager.explorer.create",
       "actionParameters": {},
       "subject": "api::daily-aggregate.daily-aggregate",
@@ -135,7 +135,8 @@
           "user",
           "project",
           "date",
-          "duration"
+          "duration",
+          "tracks_count"
         ]
       },
       "conditions": [],
@@ -160,7 +161,7 @@
       "locale": null
     },
     {
-      "documentId": "tyaofw1ltmetjf5vkftq6k91",
+      "documentId": "ce423fjd39zv9iia9w36bhad",
       "action": "plugin::content-manager.explorer.read",
       "actionParameters": {},
       "subject": "api::daily-aggregate.daily-aggregate",
@@ -169,14 +170,15 @@
           "user",
           "project",
           "date",
-          "duration"
+          "duration",
+          "tracks_count"
         ]
       },
       "conditions": [],
       "locale": null
     },
     {
-      "documentId": "ojsj0t84kvtmnvasx3o6lgpm",
+      "documentId": "vl1lmm6vajbv9mvfdxdppd44",
       "action": "plugin::content-manager.explorer.update",
       "actionParameters": {},
       "subject": "api::daily-aggregate.daily-aggregate",
@@ -185,7 +187,8 @@
           "user",
           "project",
           "date",
-          "duration"
+          "duration",
+          "tracks_count"
         ]
       },
       "conditions": [],

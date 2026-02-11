@@ -76,6 +76,11 @@
       "locale": null
     },
     {
+      "documentId": "g7jnnjhef88wgheo67i4hgv8",
+      "action": "api::task.task.archive",
+      "locale": null
+    },
+    {
       "documentId": "j7b6v4teck8u8rbehmzllhnt",
       "action": "api::task.task.create",
       "locale": null
@@ -123,6 +128,11 @@
     {
       "documentId": "o2oh8rd1thnqu5t8nrwernju",
       "action": "api::time-entry.time-entry.create",
+      "locale": null
+    },
+    {
+      "documentId": "km313o3pj1oamzczj1fw8zfq",
+      "action": "api::time-entry.time-entry.dailyTotals",
       "locale": null
     },
     {

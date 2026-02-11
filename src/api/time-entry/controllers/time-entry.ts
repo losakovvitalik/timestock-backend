@@ -13,8 +13,59 @@ import {
   sendNotFoundError,
   sendResponse,
 } from '../../../shared/lib/response';
+import { validatePayload } from '../../../shared/lib/validate-payload';
+import { dailyTotalsQuerySchema } from '../schemas/daily-totals-schema';
 
 export default factories.createCoreController('api::time-entry.time-entry', {
+  async dailyTotals(ctx) {
+    const context = new Context(ctx);
+    const userId = context.getUserId();
+    const queryParams = context.getQueryParams();
+    const params = validatePayload(dailyTotalsQuerySchema, queryParams);
+
+    const user = await strapi.documents('plugin::users-permissions.user').findOne({
+      documentId: String(userId),
+      fields: ['timezone'],
+    });
+
+    const timezone = user?.timezone || 'UTC';
+
+    const conditions = ['lnk.user_id = ?', 'te.end_time IS NOT NULL'];
+    const bindings: (string | number)[] = [userId];
+
+    if (params.from) {
+      conditions.push(
+        `DATE(te.start_time AT TIME ZONE 'UTC' AT TIME ZONE ?) >= ?`
+      );
+      bindings.push(timezone, params.from);
+    }
+
+    if (params.to) {
+      conditions.push(
+        `DATE(te.start_time AT TIME ZONE 'UTC' AT TIME ZONE ?) <= ?`
+      );
+      bindings.push(timezone, params.to);
+    }
+
+    const result = await strapi.db.connection.raw(
+      `
+      SELECT
+        DATE(te.start_time AT TIME ZONE 'UTC' AT TIME ZONE ?) as date,
+        COALESCE(SUM(te.duration), 0)::int as total_duration
+      FROM time_entries te
+      JOIN time_entries_user_lnk lnk ON te.id = lnk.time_entry_id
+      WHERE ${conditions.join(' AND ')}
+      GROUP BY date
+      ORDER BY date DESC
+      `,
+      [timezone, ...bindings]
+    );
+
+    return sendResponse({
+      data: result.rows,
+    });
+  },
+
   async stop(ctx) {
     const context = new Context(ctx);
     const documentId = context.getParams().id;

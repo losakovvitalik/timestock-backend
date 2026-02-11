@@ -77,6 +77,20 @@
           "sortable": true
         }
       },
+      "tracks_count": {
+        "edit": {
+          "label": "tracks_count",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "tracks_count",
+          "searchable": true,
+          "sortable": true
+        }
+      },
       "createdAt": {
         "edit": {
           "label": "createdAt",
@@ -169,6 +183,10 @@
           },
           {
             "name": "duration",
+            "size": 4
+          },
+          {
+            "name": "tracks_count",
             "size": 4
           }
         ]
