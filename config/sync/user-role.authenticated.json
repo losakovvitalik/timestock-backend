@@ -76,6 +76,16 @@
       "locale": null
     },
     {
+      "documentId": "s3lr64i17ecnp7bob2yghjjl",
+      "action": "api::push-subscription.push-subscription.delete",
+      "locale": null
+    },
+    {
+      "documentId": "p0t4bnzhkyfp9woabd93d25w",
+      "action": "api::push-subscription.push-subscription.findMy",
+      "locale": null
+    },
+    {
       "documentId": "g7jnnjhef88wgheo67i4hgv8",
       "action": "api::task.task.archive",
       "locale": null
