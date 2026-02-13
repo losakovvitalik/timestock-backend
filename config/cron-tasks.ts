@@ -31,10 +31,23 @@ export default {
                 },
               ],
             },
+            populate: {
+              project: true,
+            },
           });
 
         for (const reminder of reminders) {
           try {
+            if (!reminder.project) {
+              strapi.log.warn(
+                `Reminder ${reminder.documentId} has no associated project, deleting`
+              );
+              await strapi.documents('api::project-reminder.project-reminder').delete({
+                documentId: reminder.documentId,
+              });
+              continue;
+            }
+
             await ProjectReminderService.send(strapi, reminder.documentId);
           } catch (error) {
             strapi.log.error(
