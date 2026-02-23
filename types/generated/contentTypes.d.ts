@@ -580,6 +580,7 @@ export interface ApiTaskTask extends Struct.CollectionTypeSchema {
     estimated_time: Schema.Attribute.Integer;
     is_archived: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     is_completed: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    is_important: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::task.task'> &
       Schema.Attribute.Private;

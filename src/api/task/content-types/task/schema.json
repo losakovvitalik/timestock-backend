@@ -51,6 +51,10 @@
     "is_archived": {
       "type": "boolean",
       "default": false
+    },
+    "is_important": {
+      "type": "boolean",
+      "default": false
     }
   }
 }
