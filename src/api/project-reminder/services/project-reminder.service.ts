@@ -6,6 +6,7 @@ import { NotificationType } from '../../../shared/services/notification/types';
 export type RecurrenceOptions = {
   interval: 'DAILY';
   time: string;
+  daysOfWeek?: number[]; // 1 (пн) - 7 (вс), формат Luxon weekday
 };
 
 export class ProjectReminderService {
@@ -70,12 +71,7 @@ export class ProjectReminderService {
     userTimezone: string;
     recurrenceOptions: RecurrenceOptions;
   }) {
-    const options = recurrenceOptions as {
-      interval: 'DAILY';
-      time: string;
-    };
-
-    const [hour, minutes] = options.time.split(':');
+    const [hour, minutes] = recurrenceOptions.time.split(':');
 
     const now = DateTime.now().setZone(userTimezone);
     let next = now.set({
@@ -88,9 +84,16 @@ export class ProjectReminderService {
     // Если сегодня это время уже прошло, то отправлять завтра
     // это нужно при редактировании и создании
     if (next.toJSDate().getTime() < now.toJSDate().getTime()) {
-      next = next.plus({
-        day: 1,
-      });
+      next = next.plus({ day: 1 });
+    }
+
+    // Если заданы дни недели — найти ближайший разрешённый день
+    const { daysOfWeek } = recurrenceOptions;
+    if (daysOfWeek && daysOfWeek.length > 0) {
+      for (let i = 0; i < 7; i++) {
+        if (daysOfWeek.includes(next.weekday)) break;
+        next = next.plus({ day: 1 });
+      }
     }
 
     return next.toUTC().toJSDate().toISOString();
